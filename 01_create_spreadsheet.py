@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+
 def fetch_pcpartpicker_list(url):
     # Add headers to mimic a browser request
     headers = {
@@ -64,11 +65,15 @@ def save_to_csv(parts, filename):
     print(f"PCPartPicker list has been saved to {filename}.csv")
 
 
-# URL of the PCPartPicker list
-url = input("Please enter a URL: ")
-filename = input("Please enter a filename (without .csv extension): ")
+def ask_user_for_url():
+    return input("Please enter a URL: ")
+
+
+def ask_user_for_filename():
+    return input("Please enter a filename (without .csv extension): ")
+
 
 # Fetch the parts list
-parts = fetch_pcpartpicker_list(url)
+parts = fetch_pcpartpicker_list(ask_user_for_url())
 # Save the parts list to a CSV file
-save_to_csv(parts, filename)
+save_to_csv(parts, ask_user_for_filename())
