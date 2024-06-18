@@ -2,12 +2,12 @@
 def yes_no(question):
 
     while True:
-        responce = input(question).lower()
+        response = input(question).lower()
 
-        if responce == "yes" or responce == "y":
+        if response == "yes" or response == "y":
             return "yes"
 
-        elif responce == "no" or responce == "n":
+        elif response == "no" or response == "n":
             return "no"
 
         else:
