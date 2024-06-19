@@ -66,7 +66,9 @@ def save_to_csv(parts, filename):
 
 
 def ask_user_for_url():
-    return input("Please enter a URL: ")
+    while ():
+        return input("Please enter a URL: ")
+    if input()
 
 
 def ask_user_for_filename():
