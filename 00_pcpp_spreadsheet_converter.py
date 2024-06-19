@@ -67,7 +67,7 @@ def save_to_csv(parts, filename):
 
 def ask_user_for_url():
     while True:
-        response = input("Please enter a URL: ")
+        response = input("Please enter a public pcpartpicker URL: ")
         items = ['pcpartpicker.com', 'user', 'saved']
         if all(item in response for item in items):
             return response
