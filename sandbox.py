@@ -1,13 +1,18 @@
-# implemented from https://www.geeksforgeeks.org/progress-bars-in-python/ and the tqdm GitHub documentation
 from tqdm import tqdm
 import time
+from colorama import Fore, Style, init
+
+# Initialize colorama
+init(autoreset=True)
 
 
 def load_with_tqdm(total_steps):
     # Customize the bar format to display only the bar and percentage
-    bar_format = '{l_bar}{bar}| {percentage:.2f}%'
-    for _ in tqdm(range(total_steps), desc='Loading', ncols=100, ascii=False, bar_format=bar_format):
-        time.sleep(0.01)  # Simulate some work being done
+    bar_format = f'{Fore.GREEN}{{l_bar}}{{bar}}{Style.RESET_ALL}| {{percentage:.2f}}%'
+
+    for _ in tqdm(range(total_steps), desc=f'{Fore.CYAN}Loading{Style.RESET_ALL}',
+                  ncols=100, ascii=True, bar_format=bar_format):
+        time.sleep(0.1)  # Simulate some work being done
 
 
 # Example usage
