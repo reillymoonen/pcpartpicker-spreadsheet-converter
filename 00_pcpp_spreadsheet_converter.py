@@ -6,18 +6,16 @@ from bs4 import BeautifulSoup
 def fetch_pcpartpicker_list(url):
     # Add headers to mimic a browser request
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
                       'Chrome/91.0.4472.124 Safari/537.36'
     }
 
-    try:
-        # Send a GET request to the URL
-        response = requests.get(url, headers=headers)
+    # Send a GET request to the URL
+    response = requests.get(url, headers=headers)
 
-        # Check if the request was successful
-        response.raise_for_status()
-    except requests.RequestException as e:
-        print(f"Failed to fetch the page. Error: {e}")
+    # Check if the request was successful
+    if response.status_code != 200:
+        print(f"Failed to fetch the page. Status code: {response.status_code}")
         return []
 
     # Parse the HTML content
@@ -27,7 +25,7 @@ def fetch_pcpartpicker_list(url):
     parts = []
 
     # Find the table rows in the parts list
-    product_rows = soup.select('tr.part')
+    product_rows = soup.select('.tr__product')
 
     if not product_rows:
         print("No product rows found. Check the HTML structure or URL.")
@@ -69,19 +67,18 @@ def save_to_csv(parts, filename):
 
 def ask_user_for_url():
     while True:
-        response = input("Please enter a URL: ").lower()
+        response = input("Please enter a URL: ")
         if 'pcpartpicker.com' in response:
             return response
         else:
-            print("Invalid URL. Please enter a valid PCPartPicker URL.")
+            print("there is no moist")
 
 
 def ask_user_for_filename():
     return input("Please enter a filename (without .csv extension): ")
 
 
-if __name__ == "__main__":
-    # Fetch the parts list
-    parts = fetch_pcpartpicker_list(ask_user_for_url())
-    # Save the parts list to a CSV file
-    save_to_csv(parts, ask_user_for_filename())
+# Fetch the parts list
+parts = fetch_pcpartpicker_list(ask_user_for_url())
+# Save the parts list to a CSV file
+save_to_csv(parts, ask_user_for_filename())
