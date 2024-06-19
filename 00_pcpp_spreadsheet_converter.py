@@ -1,25 +1,87 @@
-# functions go here
-def yes_no(question):
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 
+
+def fetch_pcpartpicker_list(url):
+    # Add headers to mimic a browser request
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/91.0.4472.124 Safari/537.36'
+    }
+
+    try:
+        # Send a GET request to the URL
+        response = requests.get(url, headers=headers)
+
+        # Check if the request was successful
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Failed to fetch the page. Error: {e}")
+        return []
+
+    # Parse the HTML content
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # List to store parts information
+    parts = []
+
+    # Find the table rows in the parts list
+    product_rows = soup.select('tr.part')
+
+    if not product_rows:
+        print("No product rows found. Check the HTML structure or URL.")
+        return parts
+
+    for part in product_rows:
+        # Extract the part name and price
+        name_wrapper = part.select_one('.td__component a')
+        price_wrapper = part.select_one('.td__price')
+
+        if not name_wrapper:
+            print("Name wrapper not found for a part. Skipping...")
+            continue
+
+        if not price_wrapper:
+            print("Price wrapper not found for a part. Skipping...")
+            continue
+
+        name = name_wrapper.get_text(strip=True)
+        price = price_wrapper.get_text(strip=True).replace('Price', '').strip()
+
+        # Append to the parts list
+        parts.append({'Name': name, 'Price': price})
+
+    return parts
+
+
+def save_to_csv(parts, filename):
+    if not parts:
+        print("No parts to save. Exiting without creating CSV.")
+        return
+
+    # Create a DataFrame from the list of parts
+    df = pd.DataFrame(parts)
+    # Save the DataFrame to a CSV file
+    df.to_csv(f"{filename}.csv", index=False)
+    print(f"PCPartPicker list has been saved to {filename}.csv")
+
+
+def ask_user_for_url():
     while True:
-        response = input(question).lower()
-
-        if response == "yes" or response == "y":
-            return "yes"
-
-        elif response == "no" or response == "n":
-            return "no"
-
+        response = input("Please enter a URL: ").lower()
+        if 'pcpartpicker.com' in response:
+            return response
         else:
-            print("PLease enter yes or no")
+            print("Invalid URL. Please enter a valid PCPartPicker URL.")
 
 
-# main routine goes here
-while True:
-    want_instructions = yes_no("Do you want to read the instructions? ")
+def ask_user_for_filename():
+    return input("Please enter a filename (without .csv extension): ")
 
-    if want_instructions == "yes":
-        print("Instructions go here")
 
-    print("program continues...")
-    print()
+if __name__ == "__main__":
+    # Fetch the parts list
+    parts = fetch_pcpartpicker_list(ask_user_for_url())
+    # Save the parts list to a CSV file
+    save_to_csv(parts, ask_user_for_filename())
