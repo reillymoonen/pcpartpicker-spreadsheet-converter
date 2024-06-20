@@ -1,6 +1,23 @@
 import pandas as pd
 import requests
+import time
 from bs4 import BeautifulSoup
+from tqdm import tqdm
+from colorama import Fore, init
+
+# Initialize colorama
+init(autoreset=True)
+
+
+def load_with_tqdm(total_steps):
+    # Customize the bar format to integrate the percentage with the progress bar
+    bar_format = '{desc}: {percentage:.2f}%|{bar}|'
+
+    with tqdm(total=total_steps, desc=f'{Fore.LIGHTWHITE_EX}Loading{Fore.LIGHTWHITE_EX}', ncols=100,
+              bar_format=bar_format, ascii="*#") as pbar:
+        for _ in range(total_steps):
+            time.sleep(0.01)  # Simulate some work being done
+            pbar.update(1)
 
 
 def fetch_pcpartpicker_list(url):
@@ -69,7 +86,10 @@ def ask_user_for_url():
     while True:
         response = input("Please enter a public pcpartpicker URL: ")
         items = ['pcpartpicker.com', 'user', 'saved']
-        if all(item in response for item in items):
+        second_items = ['pcpartpicker.com', 'list']
+
+        # Check if response contains all items from either items or second_items
+        if all(item in response for item in items) or all(item in response for item in second_items):
             return response
         else:
             print("Please enter a valid pcpartpicker URL")
@@ -79,7 +99,13 @@ def ask_user_for_filename():
     return input("Please enter a filename (without .csv extension): ")
 
 
-# Fetch the parts list
-parts = fetch_pcpartpicker_list(ask_user_for_url())
-# Save the parts list to a CSV file
-save_to_csv(parts, ask_user_for_filename())
+# Initial loading bar
+load_with_tqdm(50)
+
+# Main loop to fetch parts and save to CSV continuously
+while True:
+    parts = fetch_pcpartpicker_list(ask_user_for_url())
+    load_with_tqdm(70)  # Show loading bar while fetching parts
+
+    # Save the parts list to a CSV file
+    save_to_csv(parts, ask_user_for_filename())
