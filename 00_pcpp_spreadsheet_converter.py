@@ -15,7 +15,7 @@ def load_with_tqdm(total_steps):
     bar_format = '{desc}: {percentage:.2f}%|{bar}|'
 
     with tqdm(total=total_steps, desc=f'{Fore.LIGHTWHITE_EX}Loading{Fore.LIGHTWHITE_EX}', ncols=100,
-              bar_format=bar_format, ascii=True) as pbar:
+              bar_format=bar_format, ascii="*#") as pbar:
         for _ in range(total_steps):
             time.sleep(0.01)  # Simulate some work being done
             pbar.update(1)
@@ -100,12 +100,12 @@ def ask_user_for_filename():
     return input("Please enter a filename (without .csv extension): ")
 
 
-load_with_tqdm(100)
+load_with_tqdm(50)
 
 # Fetch the parts list
 while True:
     parts = fetch_pcpartpicker_list(ask_user_for_url())
-    load_with_tqdm(100)
+    load_with_tqdm(70)
 
     # Save the parts list to a CSV file
     save_to_csv(parts, ask_user_for_filename())
