@@ -102,7 +102,10 @@ def ask_user_for_url():
 
 
 def ask_user_for_filename():
-    return input("Please enter a filename (without .csv extension): ")
+    while True
+        response = input("Please enter a filename (without .csv extension): ")
+        
+
 
 
 # Initial loading bar
