@@ -109,3 +109,5 @@ while True:
 
     # Save the parts list to a CSV file
     save_to_csv(parts, ask_user_for_filename())
+
+    break
