@@ -12,7 +12,7 @@ def load_with_tqdm(total_steps):
     bar_format = '{desc}: {percentage:.2f}%|{bar}|'
 
     with tqdm(total=total_steps, desc=f'{Fore.LIGHTWHITE_EX}Loading{Fore.LIGHTWHITE_EX}', ncols=100,
-              bar_format=bar_format) as pbar:
+              bar_format=bar_format, ascii=True) as pbar:
         for _ in range(total_steps):
             time.sleep(0.01)  # Simulate some work being done
             pbar.update(1)
