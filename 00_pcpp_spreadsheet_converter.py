@@ -50,8 +50,13 @@ def fetch_pcpartpicker_list(url):
 
     for part in product_rows:
         # Extract the part name and price
-        name_wrapper = part.select_one('.td__component a')
+        component_wrapper = part.select_one('.td__component a')
+        name_wrapper = part.select_one('.td__name')
         price_wrapper = part.select_one('.td__price')
+
+        if not component_wrapper:
+            print("Component wrapper not found for a part. Skipping...")
+            continue
 
         if not name_wrapper:
             print("Name wrapper not found for a part. Skipping...")
@@ -61,11 +66,12 @@ def fetch_pcpartpicker_list(url):
             print("Price wrapper not found for a part. Skipping...")
             continue
 
+        component = component_wrapper.get_text(strip=True)
         name = name_wrapper.get_text(strip=True)
         price = price_wrapper.get_text(strip=True).replace('Price', '').strip()
 
         # Append to the parts list
-        parts.append({'Name': name, 'Price': price})
+        parts.append({'Component': component, 'Name': name, 'Price': price})
 
     return parts
 
@@ -86,10 +92,10 @@ def ask_user_for_url():
     while True:
         response = input("Please enter a URL: ")
         items = ['pcpartpicker.com', 'user', 'saved']
-        second_items = ['pcpartpicker.com', 'list']
+        alt_items = ['pcpartpicker.com', 'list']
 
-        # Check if response contains all items from either items or second_items
-        if all(item in response for item in items) or all(item in response for item in second_items):
+        # Check if response contains all items from either items or alt_items
+        if all(item in response for item in items) or all(item in response for item in alt_items):
             return response
         else:
             print("Please enter a valid pcpartpicker URL")
@@ -109,3 +115,4 @@ while True:
 
     # Save the parts list to a CSV file
     save_to_csv(parts, ask_user_for_filename())
+    break
