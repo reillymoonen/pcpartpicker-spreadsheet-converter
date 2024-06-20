@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 from colorama import Fore, init
 
-# implemented from https://www.geeksforgeeks.org/progress-bars-in-python/ and the tqdm GitHub documentation
 # Initialize colorama
 init(autoreset=True)
 
@@ -100,12 +99,13 @@ def ask_user_for_filename():
     return input("Please enter a filename (without .csv extension): ")
 
 
+# Initial loading bar
 load_with_tqdm(50)
 
-# Fetch the parts list
+# Main loop to fetch parts and save to CSV continuously
 while True:
     parts = fetch_pcpartpicker_list(ask_user_for_url())
-    load_with_tqdm(70)
+    load_with_tqdm(70)  # Show loading bar while fetching parts
 
     # Save the parts list to a CSV file
     save_to_csv(parts, ask_user_for_filename())
