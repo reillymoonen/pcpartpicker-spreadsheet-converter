@@ -6,20 +6,6 @@ from tqdm import tqdm
 from colorama import Fore, init
 
 
-def yes_no(question):
-    while True:
-        response = input(question).lower()
-
-        if response == "yes" or response == "y":
-            return "yes"
-
-        elif response == "no" or response == "n":
-            return "no"
-
-        else:
-            print("PLease enter yes or no")
-
-
 def load_with_tqdm(total_steps):
     # Customize the bar format to integrate the percentage with the progress bar
     bar_format = '{desc}: {percentage:.2f}%|{bar}|'
@@ -115,14 +101,6 @@ init(autoreset=True)
 
 # Initial loading bar
 load_with_tqdm(50)
-
-while True:
-    want_instructions = yes_no("Do you want to read the instructions? ")
-
-    if want_instructions == "yes":
-        print("Instructions go here")
-
-    break
 
 # Main loop to fetch parts and save to CSV continuously
 while True:
