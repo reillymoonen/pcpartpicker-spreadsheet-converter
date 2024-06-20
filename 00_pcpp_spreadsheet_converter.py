@@ -1,9 +1,9 @@
 import pandas as pd
 import requests
+import time
 from bs4 import BeautifulSoup
 from tqdm import tqdm
-import time
-from colorama import Fore, Style, init
+from colorama import Fore, init
 
 # implemented from https://www.geeksforgeeks.org/progress-bars-in-python/ and the tqdm GitHub documentation
 # Initialize colorama
