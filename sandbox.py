@@ -2,6 +2,9 @@ import customtkinter as ctk
 import pandas as pd
 from tkinter import messagebox
 
+ctk.set_appearance_mode("dark")  # Modes: system (default), light, dark
+ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
+
 
 class CSVViewer(ctk.CTk):
     def __init__(self):
@@ -32,11 +35,13 @@ class CSVViewer(ctk.CTk):
         for widget in self.display_frame.winfo_children():
             widget.destroy()
 
+        # Iterate through each row in the DataFrame
         for index, row in df.iterrows():
-            block = ctk.CTkFrame(self.display_frame)
-            block.pack(fill="x", pady=5)
-
+            # Create a separate block for each item in the row
             for col, value in row.items():
+                block = ctk.CTkFrame(self.display_frame)
+                block.pack(fill="x", pady=5)
+
                 label = ctk.CTkLabel(block, text=f"{col}: {value}")
                 label.pack(anchor="w")
 
