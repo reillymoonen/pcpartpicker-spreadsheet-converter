@@ -143,8 +143,8 @@ while True:
 
     ask_gst = yes_no("Do you want to include GST? ")
 
-    if ask_gst == "yes":
-        # do something to divide all the data by 1.15
+    if ask_gst == "no":
+
 
     # Save the parts list to a CSV file
     save_to_csv(parts, ask_user_for_filename())
