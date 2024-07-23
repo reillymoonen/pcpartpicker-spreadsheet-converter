@@ -50,7 +50,7 @@ def fetch_pcpartpicker_list(url):
 
     for part in product_rows:
         # Extract the part name and price
-        component_wrapper = part.select_one('.td__component a')
+        component_wrapper = part.select_one('.td__component')
         name_wrapper = part.select_one('.td__name')
         price_wrapper = part.select_one('.td__price')
 

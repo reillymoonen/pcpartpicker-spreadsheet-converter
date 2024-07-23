@@ -9,6 +9,20 @@ from colorama import Fore, init
 init(autoreset=True)
 
 
+def yes_no(question):
+    while True:
+        response = input(question).lower()
+
+        if response == "yes" or response == "y":
+            return "yes"
+
+        elif response == "no" or response == "n":
+            return "no"
+
+        else:
+            print("PLease enter yes or no")
+
+
 def load_with_tqdm(total_steps):
     # Customize the bar format to integrate the percentage with the progress bar
     bar_format = '{desc}: {percentage:.2f}%|{bar}|'
@@ -50,7 +64,7 @@ def fetch_pcpartpicker_list(url):
 
     for part in product_rows:
         # Extract the part name and price
-        component_wrapper = part.select_one('.td__component a')
+        component_wrapper = part.select_one('.td__component')
         name_wrapper = part.select_one('.td__name')
         price_wrapper = part.select_one('.td__price')
 
@@ -110,13 +124,27 @@ def ask_user_for_filename():
             return response
 
 
+# Main loop
+
 # Initial loading bar
 load_with_tqdm(50)
 
-# Main loop to fetch parts and save to CSV continuously
 while True:
+    want_instructions = yes_no("Do you want to read the instructions? ")
+
+    if want_instructions == "yes":
+        print("Instructions go here")
+
+    print()
+
     parts = fetch_pcpartpicker_list(ask_user_for_url())
+
     load_with_tqdm(70)  # Show loading bar while fetching parts
+
+    ask_gst = yes_no("Do you want to include GST? ")
+
+    if ask_gst == "yes":
+        # do something to divide all the data by 1.15
 
     # Save the parts list to a CSV file
     save_to_csv(parts, ask_user_for_filename())
