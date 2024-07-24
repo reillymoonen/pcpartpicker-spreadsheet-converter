@@ -8,6 +8,7 @@ from colorama import Fore, init
 # Initialize colorama
 init(autoreset=True)
 
+
 def yes_no(question):
     while True:
         response = input(question).lower()
@@ -18,6 +19,7 @@ def yes_no(question):
         else:
             print("Please enter yes or no")
 
+
 def load_with_tqdm(total_steps):
     # Customize the bar format to integrate the percentage with the progress bar
     bar_format = '{desc}: {percentage:.2f}%|{bar}|'
@@ -26,6 +28,7 @@ def load_with_tqdm(total_steps):
         for _ in range(total_steps):
             time.sleep(0.01)  # Simulate some work being done
             pbar.update(1)
+
 
 def fetch_pcpartpicker_list(url):
     # Add headers to mimic a browser request
@@ -69,6 +72,7 @@ def fetch_pcpartpicker_list(url):
         parts.append({'Component': component, 'Name': name, 'Price': price})
     return parts
 
+
 def save_to_csv(parts, filename):
     if not parts:
         print("No parts to save. Exiting without creating CSV.")
@@ -78,6 +82,7 @@ def save_to_csv(parts, filename):
     # Save the DataFrame to a CSV file
     df.to_csv(f"{filename}.csv", index=False)
     print(f"PCPartPicker list has been saved to {filename}.csv")
+
 
 def ask_user_for_url():
     while True:
@@ -90,6 +95,7 @@ def ask_user_for_url():
         else:
             print("Please enter a valid pcpartpicker URL")
 
+
 def ask_user_for_filename():
     while True:
         response = input("Please enter a filename (without .csv extension): ")
@@ -97,6 +103,7 @@ def ask_user_for_filename():
             print("Please enter a filename without .csv extension")
         else:
             return response
+
 
 # Main loop
 # Initial loading bar
