@@ -126,6 +126,12 @@ while True:
             if part['Price'] is not None:
                 part['Price'] = round(part['Price'] / 1.15, 2)
 
+    # Display data here
+    df = pd.DataFrame(parts)
+    print("\nFinal Data:\n")
+    print(df)
+    print()
+
     # Save the parts list to a CSV file
     save_to_csv(parts, ask_user_for_filename())
     break
