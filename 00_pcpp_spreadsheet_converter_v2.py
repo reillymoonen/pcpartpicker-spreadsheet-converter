@@ -66,7 +66,7 @@ def fetch_pcpartpicker_list(url):
             # Remove any non-numeric characters except for '.' and convert to float
             cleaned_price = ''.join(c for c in price if c.isdigit() or c == '.')
             if cleaned_price:
-                price = float(cleaned_price)
+                price = f'${float(cleaned_price):.2f}'
             else:
                 price = None
         except ValueError as e:
@@ -126,7 +126,10 @@ while True:
         # Divide the price by 1.15 for all parts
         for part in parts:
             if part['Price'] is not None:
-                part['Price'] = round(part['Price'] / 1.15, 2)
+                # Remove the '$' sign and convert to float
+                price_value = float(part['Price'][1:])
+                # Perform the division and round the result
+                part['Price'] = f"${round(price_value / 1.15, 2)}"
 
     # Display data here
     df = pd.DataFrame(parts)
