@@ -62,12 +62,14 @@ def fetch_pcpartpicker_list(url):
         component = component_wrapper.get_text(strip=True)
         name = name_wrapper.get_text(strip=True)
         price = price_wrapper.get_text(strip=True).replace('Price', '').strip()
-        if price.startswith('$'):
-            try:
-                price = float(price[1:].replace(',', ''))
-            except ValueError:
+        try:
+            # Remove any non-numeric characters except for '.' and convert to float
+            cleaned_price = ''.join(c for c in price if c.isdigit() or c == '.')
+            if cleaned_price:
+                price = float(cleaned_price)
+            else:
                 price = None
-        else:
+        except ValueError as e:
             price = None
         parts.append({'Component': component, 'Name': name, 'Price': price})
     return parts
