@@ -107,7 +107,7 @@ def ask_user_for_filename():
             return response
 
 
-def main():
+if __name__ == "__main__":
     load_with_tqdm(50)
 
     want_instructions = yes_no("Do you want to read the instructions? ")
@@ -123,11 +123,16 @@ def main():
         if parts:
             ask_gst = yes_no("Do you want to include GST? ")
 
-            if ask_gst == "no":
-                for part in parts:
-                    if part['Price'] is not None:
-                        price_value = float(part['Price'][1:])
-                        part['Price'] = f"${round(price_value / 1.15, 2)}"
+            total_price = 0
+            for part in parts:
+                if part['Price'] is not None:
+                    price_value = float(part['Price'][1:])
+                    if ask_gst == "no":
+                        price_value = round(price_value / 1.15, 2)
+                    part['Price'] = f"${price_value:.2f}"
+                    total_price += price_value
+
+            parts.append({'Component': 'Total', 'Name': '', 'Price': f"${total_price:.2f}"})
 
             df = pd.DataFrame(parts)
             print("\nFinal Data:\n")
@@ -136,7 +141,3 @@ def main():
 
             save_to_csv(parts, ask_user_for_filename())
             break
-
-
-if __name__ == "__main__":
-    main()
