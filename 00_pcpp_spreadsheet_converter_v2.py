@@ -140,4 +140,9 @@ if __name__ == "__main__":
             print()
 
             save_to_csv(parts, ask_user_for_filename())
-            break
+
+            replay = yes_no("DO you want to convert another link? ")
+            if replay == "yes":
+                print("replayed")
+            else: break
+            
