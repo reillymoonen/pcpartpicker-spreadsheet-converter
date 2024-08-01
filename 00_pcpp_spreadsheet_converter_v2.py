@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import time
+import os
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from colorama import Fore, init
@@ -103,6 +104,8 @@ def ask_user_for_filename():
         response = input("Please enter a filename (without .csv extension): ")
         if response.endswith('.csv'):
             print("Please enter a filename without .csv extension")
+        elif os.path.exists(f"{response}.csv"):
+            print(f"A file named '{response}.csv' already exists. Please choose a different name.")
         else:
             return response
 
