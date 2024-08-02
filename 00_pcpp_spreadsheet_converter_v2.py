@@ -2,7 +2,6 @@ import pandas as pd
 import requests
 import time
 import os
-import csv
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from colorama import Fore, init
@@ -84,21 +83,9 @@ def save_to_csv(parts, filename):
     if not parts:
         print("No parts to save. Exiting without creating CSV.")
         return
-
-    csv_filename = f"{filename}.csv"
-
-    with open(csv_filename, 'w', newline='') as csvfile:
-        fieldnames = ['Component', 'Name', 'Price']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-        writer.writeheader()
-        for part in parts:
-            writer.writerow(part)
-
-        csvfile.flush()
-        os.fsync(csvfile.fileno())
-
-    print(f"PCPartPicker list has been saved to {csv_filename}")
+    df = pd.DataFrame(parts)
+    df.to_csv(f"{filename}.csv", index=False)
+    print(f"PCPartPicker list has been saved to {filename}.csv")
 
 
 def ask_user_for_url():
@@ -161,4 +148,3 @@ if __name__ == "__main__":
             if replay == "yes":
                 print("replayed")
             else: break
-            
