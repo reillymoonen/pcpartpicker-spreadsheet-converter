@@ -142,9 +142,12 @@ if __name__ == "__main__":
             print(df)
             print()
 
-            save_to_csv(parts, ask_user_for_filename())
+            ask_to_save = yes_no("Would you like to save this to a CSV file (spreadsheet)?")
+            if ask_to_save == "yes":
+                save_to_csv(parts, ask_user_for_filename())
 
-            replay = yes_no("DO you want to convert another link? ")
-            if replay == "yes":
-                print("replayed")
-            else: break
+        replay = yes_no("Do you want to convert another link? ")
+        if replay == "no":
+            break
+
+print("Thank you for using the PCPartPicker Spreadsheet Converter!")
