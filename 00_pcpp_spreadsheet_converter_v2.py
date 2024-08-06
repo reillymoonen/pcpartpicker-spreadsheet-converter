@@ -109,7 +109,7 @@ def ask_user_for_filename():
         else:
             return response
 
-
+# implemented from https://www.geeksforgeeks.org/progress-bars-in-python/ and the tqdm GitHub documentation
 if __name__ == "__main__":
     load_with_tqdm(50)
 
