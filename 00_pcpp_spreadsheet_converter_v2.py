@@ -118,6 +118,8 @@ if __name__ == "__main__":
         print("Instructions go here")
     print()
 
+# main loop
+
     while True:
         url = ask_user_for_url()
         load_with_tqdm(70)
