@@ -10,6 +10,9 @@ from colorama import Fore, init
 init(autoreset=True)
 
 
+# functions go here
+
+# yes_no_checker from the tutorial
 def yes_no(question):
     while True:
         response = input(question).lower()
@@ -21,6 +24,7 @@ def yes_no(question):
             print("Please enter yes or no")
 
 
+# Loading bar
 def load_with_tqdm(total_steps):
     bar_format = '{desc}: {percentage:.2f}%|{bar}|'
     with tqdm(total=total_steps, desc=f'{Fore.LIGHTWHITE_EX}Loading{Fore.LIGHTWHITE_EX}', ncols=100,
@@ -30,6 +34,7 @@ def load_with_tqdm(total_steps):
             pbar.update(1)
 
 
+# Uses tqdm to get the components from the website
 def fetch_pcpartpicker_list(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) '
@@ -79,6 +84,7 @@ def fetch_pcpartpicker_list(url):
         return None
 
 
+# saves the data from the website to a csv file
 def save_to_csv(parts, filename):
     if not parts:
         print("No parts to save. Exiting without creating CSV.")
@@ -88,6 +94,7 @@ def save_to_csv(parts, filename):
     print(f"PCPartPicker list has been saved to {filename}.csv")
 
 
+# Asks the user for the pcpartpicker url
 def ask_user_for_url():
     while True:
         response = input("Please enter a PCPartPicker URL: ")
@@ -99,6 +106,7 @@ def ask_user_for_url():
             print("Please enter a valid PCPartPicker URL")
 
 
+# Asks the user for what they want the filename to be
 def ask_user_for_filename():
     while True:
         response = input("Please enter a filename (without .csv extension): ")
@@ -109,6 +117,7 @@ def ask_user_for_filename():
         else:
             return response
 
+
 # implemented from https://www.geeksforgeeks.org/progress-bars-in-python/ and the tqdm GitHub documentation
 if __name__ == "__main__":
     load_with_tqdm(50)
@@ -118,16 +127,21 @@ if __name__ == "__main__":
         print("Instructions go here")
     print()
 
+
 # main loop
 
     while True:
         url = ask_user_for_url()
+
+        # Display a loading animation
         load_with_tqdm(70)
+
         parts = fetch_pcpartpicker_list(url)
 
         if parts:
             ask_gst = yes_no("Do you want to include GST? ")
 
+            # Formats the price and removes GST if the user wants
             total_price = 0
             for part in parts:
                 if part['Price'] is not None:
@@ -137,19 +151,21 @@ if __name__ == "__main__":
                     part['Price'] = f"${price_value:.2f}"
                     total_price += price_value
 
-            parts.append({'Component': 'Total', 'Name': '', 'Price': f"${total_price:.2f}"})
 
+            # Create a pandas DataFrame from the parts list
             df = pd.DataFrame(parts)
             print("\nFinal Data:\n")
             print(df)
             print()
 
+            # Ask if the user wants to save the data to a CSV file
             ask_to_save = yes_no("Would you like to save this to a CSV file (spreadsheet)?")
             if ask_to_save == "yes":
                 save_to_csv(parts, ask_user_for_filename())
 
+        # Ask if the user wants to convert another link
         replay = yes_no("Do you want to convert another link? ")
         if replay == "no":
             break
 
-print("Thank you for using the PCPartPicker Spreadsheet Converter!")
+    print("Thank you for using the PCPartPicker Spreadsheet Converter!")
