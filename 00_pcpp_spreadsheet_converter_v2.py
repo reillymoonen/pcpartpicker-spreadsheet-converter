@@ -85,11 +85,19 @@ def fetch_pcpartpicker_list(url):
 
 
 # saves the data from the website to a csv file
-def save_to_csv(parts, filename):
-    if not parts:
-        print("No parts to save. Exiting without creating CSV.")
+def save_to_csv(data, filename):
+    if isinstance(data, pd.DataFrame):
+        df = data
+    elif isinstance(data, list):
+        df = pd.DataFrame(data)
+    else:
+        print("Invalid data format. Cannot save to CSV.")
         return
-    df = pd.DataFrame(parts)
+
+    if df.empty:
+        print("No data to save. Exiting without creating CSV.")
+        return
+
     df.to_csv(f"{filename}.csv", index=False)
     print(f"PCPartPicker list has been saved to {filename}.csv")
 
@@ -118,6 +126,32 @@ def ask_user_for_filename():
             return response
 
 
+def display_specific_lines(df):
+    while True:
+        line_input = input("Enter line numbers to display (comma-separated, or 'all' for all lines): ")
+        if line_input.lower() == 'all':
+            print(df)
+            return df
+        else:
+            try:
+                lines = [int(x.strip()) for x in line_input.split(',')]
+                invalid_lines = [str(line) for line in lines if line < 1 or line > len(df)]
+                if invalid_lines:
+                    raise ValueError(f"Invalid line number(s): {', '.join(invalid_lines)}")
+
+                selected_df = df.iloc[[line - 1 for line in lines]].reset_index(drop=True)
+                print(selected_df)
+                return selected_df
+            except ValueError as e:
+                if "invalid literal for int()" in str(e):
+                    print("Error: Please enter only numbers separated by commas.")
+                else:
+                    print(f"Error: {e}")
+                print(f"Please enter valid line numbers between 1 and {len(df)}.")
+
+
+# main loop
+
 # implemented from https://www.geeksforgeeks.org/progress-bars-in-python/ and the tqdm GitHub documentation
 if __name__ == "__main__":
     load_with_tqdm(50)
@@ -127,8 +161,6 @@ if __name__ == "__main__":
         print("Instructions go here")
     print()
 
-
-# main loop
 
     while True:
         url = ask_user_for_url()
@@ -151,17 +183,23 @@ if __name__ == "__main__":
                     part['Price'] = f"${price_value:.2f}"
                     total_price += price_value
 
-
             # Create a pandas DataFrame from the parts list
             df = pd.DataFrame(parts)
-            print("\nFinal Data:\n")
+            print("\nInitial Data:\n")
             print(df)
             print()
+
+            # Ask if the user wants to select specific lines
+            ask_select = yes_no("Do you want to select specific lines? ")
+            if ask_select == "yes":
+                selected_df = display_specific_lines(df)
+            else:
+                selected_df = df
 
             # Ask if the user wants to save the data to a CSV file
             ask_to_save = yes_no("Would you like to save this to a CSV file (spreadsheet)?")
             if ask_to_save == "yes":
-                save_to_csv(parts, ask_user_for_filename())
+                save_to_csv(selected_df, ask_user_for_filename())
 
         # Ask if the user wants to convert another link
         replay = yes_no("Do you want to convert another link? ")
