@@ -158,9 +158,74 @@ if __name__ == "__main__":
 
     want_instructions = yes_no("Do you want to read the instructions? ")
     if want_instructions == "yes":
-        print("Instructions go here")
-    print()
+        print("""
+    ==============================================
+    WELCOME TO THE PCPARTPICKER SPREADSHEET CONVERTER
+    ==============================================
 
+    This tool helps you fetch and save the components of a PC build list from a PCPartPicker URL. Follow the steps below to use the tool:
+
+    ──────────────────────────────────────────────
+    Step 1: Start the Program
+    ──────────────────────────────────────────────
+    Run the program, and you will see a loading animation. This is just a visual indication that the tool is starting up.
+
+    ──────────────────────────────────────────────
+    Step 2: Read the Instructions (Optional)
+    ──────────────────────────────────────────────
+    The program will ask if you want to read the instructions. If you are familiar with the tool, you can skip this step by entering "no." Otherwise, enter "yes" to review the instructions.
+
+    ──────────────────────────────────────────────
+    Step 3: Enter a PCPartPicker URL
+    ──────────────────────────────────────────────
+    You will be prompted to enter a valid PCPartPicker URL. Ensure that the URL includes "pcpartpicker.com," "user," and "saved," or "pcpartpicker.com" and "list."
+
+    Example URL formats:
+    • https://pcpartpicker.com/user/username/saved/
+    • https://pcpartpicker.com/list/
+
+    ──────────────────────────────────────────────
+    Step 4: Fetching Components
+    ──────────────────────────────────────────────
+    After entering the URL, the program will fetch the components of your PC build list from the website. You will see another loading animation during this process.
+
+    ──────────────────────────────────────────────
+    Step 5: Include GST (Optional)
+    ──────────────────────────────────────────────
+    The program will ask if you want to include GST (Goods and Services Tax) in the prices. If you choose "no," the prices will be adjusted to exclude GST.
+
+    ──────────────────────────────────────────────
+    Step 6: View the Data
+    ──────────────────────────────────────────────
+    The program will display the fetched components in a table format. This includes the component type, name, and price.
+
+    ──────────────────────────────────────────────
+    Step 7: Select Specific Lines (Optional)
+    ──────────────────────────────────────────────
+    You have the option to display specific lines from the table. If you enter "yes," you can specify the line numbers you want to see, separated by commas. If you want to see all lines, simply enter "all."
+
+    Example input for specific lines: 1, 3, 5  
+    Example input for all lines: all
+
+    ──────────────────────────────────────────────
+    Step 8: Save Data to CSV (Optional)
+    ──────────────────────────────────────────────
+    If you would like to save the displayed data to a CSV file, enter "yes" when prompted. You will then be asked to provide a filename (without the .csv extension).
+
+    Ensure that the filename you choose doesn't already exist in the directory. If it does, the program will ask you to choose a different name.
+
+    ──────────────────────────────────────────────
+    Step 9: Convert Another Link (Optional)
+    ──────────────────────────────────────────────
+    After saving the data, you will be asked if you want to convert another PCPartPicker URL. If you do, enter "yes" and repeat the process. If not, enter "no" to exit the program.
+
+    ──────────────────────────────────────────────
+    Final Step: Exit
+    ──────────────────────────────────────────────
+    Once you're done, the program will thank you for using the tool and exit automatically.
+
+    ==============================================
+    """)
 
     while True:
         url = ask_user_for_url()
