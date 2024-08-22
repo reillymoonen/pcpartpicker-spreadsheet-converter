@@ -126,6 +126,7 @@ def ask_user_for_filename():
             return response
 
 
+# Lets the user choose specific lines
 def display_specific_lines(df):
     while True:
         line_input = input("Enter line numbers to display (comma-separated, or 'all' for all lines): ")
