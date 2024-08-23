@@ -237,7 +237,7 @@ if __name__ == "__main__":
         parts = fetch_pcpartpicker_list(url)
 
         if parts:
-            ask_gst = yes_no("Do you want to include GST? ")
+            ask_gst = yes_no("Do you want to include GST (Goods and Services Tax, generly you would want to include this)? ")
 
             # Formats the price and removes GST if the user wants
             total_price = 0
