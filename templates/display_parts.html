@@ -37,6 +37,10 @@
         </div>
         <form action="/download_csv" method="POST" class="mt-4">
             <input type="hidden" name="parts" value="{{ parts|tojson }}">
+            <script>
+                const partsJson = "{{ parts|tojson | safe }}"; // Ensure it's safe for output
+                console.log("Parts JSON:", partsJson); // Log the JSON string
+            </script>
             <input type="hidden" name="filename" value="{{ filename }}">
             <button type="submit" class="btn btn-success w-100">Download CSV</button>
         </form>

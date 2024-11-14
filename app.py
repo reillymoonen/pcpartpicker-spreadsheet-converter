@@ -99,12 +99,18 @@ def fetch_parts():
 
 @app.route('/download_csv', methods=['POST'])
 def download_csv():
-    parts_json = request.form['parts']
-    parts = json.loads(parts_json)
-    csv_output = save_to_csv(parts, request.form['filename'])
-    if csv_output.startswith("Error"):
-        return csv_output
-    return send_file(csv_output, as_attachment=True, mimetype='text/csv')
+    parts_json = request.form.get('parts', '')
+    print("Received parts_json:", parts_json)  # Debug output
+
+    if not parts_json:
+        return "No parts data received", 400
+
+    try:
+        parts = json.loads(parts_json)
+        print("Decoded parts:", parts)  # Debug output
+    except json.JSONDecodeError as e:
+        print("JSON decoding error:", e)  # Print the error for debugging
+        return "Invalid JSON data", 400
 
 if __name__ == '__main__':
     app.run(debug=True)
