@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, send_file
+# app.py
+from flask import Flask, render_template, request, send_file, jsonify
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -51,18 +52,6 @@ def fetch_pcpartpicker_list(url):
 
     return parts
 
-# Convert parts list to CSV and send it as a response
-def save_to_csv(parts):
-    if not parts:
-        return None
-
-    df = pd.DataFrame(parts)
-    # Save to a BytesIO stream for returning as a downloadable file
-    output = io.BytesIO()
-    df.to_csv(output, index=False)
-    output.seek(0)
-    return output
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -70,19 +59,27 @@ def index():
 @app.route('/fetch_parts', methods=['POST'])
 def fetch_parts():
     url = request.form['url']
-    filename = request.form['filename']
-    
-    load_with_tqdm(50)  # Simulate loading bar
-    
     parts = fetch_pcpartpicker_list(url)
-    load_with_tqdm(70)  # Simulate progress bar while fetching parts
     
-    csv_output = save_to_csv(parts)
-    
-    if csv_output:
-        return send_file(csv_output, as_attachment=True, download_name=f"{filename}.csv", mimetype='text/csv')
+    if parts:
+        return jsonify({'success': True, 'data': parts})
     else:
-        return "Failed to fetch parts or no parts found", 400
+        return jsonify({'success': False, 'message': 'Failed to fetch parts or no parts found'}), 400
+
+@app.route('/download_csv', methods=['POST'])
+def download_csv():
+    data = request.json.get('data', [])
+    filename = request.json.get('filename', 'parts_list')
+    
+    if not data:
+        return "No data provided", 400
+        
+    df = pd.DataFrame(data)
+    output = io.BytesIO()
+    df.to_csv(output, index=False)
+    output.seek(0)
+    
+    return send_file(output, as_attachment=True, download_name=f"{filename}.csv", mimetype='text/csv')
 
 if __name__ == '__main__':
     app.run(debug=True)
