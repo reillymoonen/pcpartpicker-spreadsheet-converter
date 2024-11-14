@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Part Picker Scraper</title>
+</head>
+<body>
+    <h1>PCPartPicker List Scraper</h1>
+    <form action="/fetch_parts" method="POST">
+        <label for="url">Enter URL:</label>
+        <input type="text" id="url" name="url" required><br><br>
+        
+        <label for="filename">Enter Filename (without .csv extension):</label>
+        <input type="text" id="filename" name="filename" required><br><br>
+
+        <button type="submit">Fetch Parts</button>
+    </form>
+</body>
+</html>
