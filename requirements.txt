@@ -1,0 +1,6 @@
+Flask
+pandas as pd
+requests
+beautifulsoup4
+tqdm
+colorama
