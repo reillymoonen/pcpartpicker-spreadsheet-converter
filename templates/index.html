@@ -386,6 +386,47 @@ th {
             document.querySelector('.footer').classList.toggle('dark-mode', darkMode);
             this.classList.toggle('dark', darkMode);
         });
+
+        document.getElementById('scraperForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const url = document.getElementById('url').value;
+            const loading = document.getElementById('loading');
+            const downloadButton = document.getElementById('downloadButton');
+
+            loading.style.display = 'block';
+            downloadButton.style.display = 'none';
+
+            try {
+                const response = await fetch('/fetch_parts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `url=${encodeURIComponent(url)}`
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentData = result.data;
+                    displayData(result.data);
+                    downloadButton.style.display = 'block';
+                } else {
+                    // Show specific error message based on the response
+                    if (result.message.includes("Invalid URL")) {
+                        alert('Invalid URL. Please enter a valid PCPartPicker list URL.');
+                    } else {
+                        alert('Failed to fetch parts. Please try again.');
+                    }
+                }
+            } catch (error) {
+                alert('An error occurred. Please try again.');
+                console.error('Error:', error);
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
