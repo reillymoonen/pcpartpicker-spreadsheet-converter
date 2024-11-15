@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup 
@@ -6,12 +6,28 @@ import time
 from tqdm import tqdm
 import re
 import io
+import re
 from colorama import Fore, init
 import json
 
 # Initialize Flask and colorama
 app = Flask(__name__)
 init(autoreset=True)
+
+def clean_price(price_text):
+    # Match any currency symbol followed by numbers
+    match = re.search(r'([€$£¥₩₹₽R฿kr₺])\s*(\d+(?:[.,]\d{2})?)', price_text)
+    if match:
+        symbol = match.group(1)
+        amount = match.group(2)
+        return f'{symbol}{amount}'
+    
+    # If no currency symbol found, just try to find the numbers
+    number_match = re.search(r'\d+(?:[.,]\d{2})?', price_text)
+    if number_match:
+        return number_match.group(0)
+    
+    return '0.00'  # Default return with no currency assumption
 
 # Function for loading with a tqdm-like progress bar
 def load_with_tqdm(total_steps):
@@ -47,13 +63,15 @@ def fetch_pcpartpicker_list(url):
 
         component = component_wrapper.get_text(strip=True)
         name = name_wrapper.get_text(strip=True)
+        price = clean_price(price_wrapper.get_text(strip=True))
+
         
         # Extract the price and remove any non-numeric characters except for the currency symbol
         price = price_wrapper.get_text(strip=True).replace('Price', '').strip()
         
         # Use regex to match the currency symbol and the number (e.g., $100, €200, etc.)
         price = re.sub(r'[^0-9\.\,\-\$€£]', '', price)  # This removes anything other than digits, commas, periods, and some symbols
-        
+      
         parts.append({'Component': component, 'Name': name, 'Price': price})
 
     return parts
@@ -85,13 +103,32 @@ def index():
 @app.route('/fetch_parts', methods=['POST'])
 def fetch_parts():
     url = request.form['url']
-    filename = request.form['filename']
     
-    load_with_tqdm(50)  # Simulate loading bar
+    # Check if the URL looks valid (basic regex for URL format)
+    if not re.match(r'https?://(?:www\.)?pcpartpicker\.com/list/\w+', url):
+        return jsonify({'success': False, 'message': 'Invalid URL. Please enter a valid PCPartPicker list URL.'}), 400
     
     parts = fetch_pcpartpicker_list(url)
-    load_with_tqdm(70)  # Simulate progress bar while fetching parts
     
+    if parts:
+        return jsonify({'success': True, 'data': parts})
+    else:
+        return jsonify({'success': False, 'message': 'Failed to fetch parts or no parts found'}), 400
+
+@app.route('/download_csv', methods=['POST'])
+def download_csv():
+    data = request.json.get('data', [])
+    filename = request.json.get('filename', 'parts_list')
+    
+    if not data:
+        return "No data provided", 400
+        
+    df = pd.DataFrame(data)
+    output = io.BytesIO()
+    df.to_csv(output, index=False)
+    output.seek(0)
+    
+    return send_file(output, as_attachment=True, download_name=f"{filename}.csv", mimetype='text/csv')
     if not parts:
         return "Failed to fetch parts or no parts found", 400
     
