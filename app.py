@@ -1,4 +1,3 @@
-# app.py
 from flask import Flask, render_template, request, send_file, jsonify
 import pandas as pd
 import requests
@@ -7,10 +6,26 @@ import time
 from tqdm import tqdm
 from colorama import Fore, init
 import io
+import re
 
 # Initialize Flask and colorama
 app = Flask(__name__)
 init(autoreset=True)
+
+def clean_price(price_text):
+    # Match any currency symbol followed by numbers
+    match = re.search(r'([€$£¥₩₹₽R฿kr₺])\s*(\d+(?:[.,]\d{2})?)', price_text)
+    if match:
+        symbol = match.group(1)
+        amount = match.group(2)
+        return f'{symbol}{amount}'
+    
+    # If no currency symbol found, just try to find the numbers
+    number_match = re.search(r'\d+(?:[.,]\d{2})?', price_text)
+    if number_match:
+        return number_match.group(0)
+    
+    return '0.00'  # Default return with no currency assumption
 
 # Function for loading with a tqdm-like progress bar
 def load_with_tqdm(total_steps):
@@ -46,7 +61,7 @@ def fetch_pcpartpicker_list(url):
 
         component = component_wrapper.get_text(strip=True)
         name = name_wrapper.get_text(strip=True)
-        price = price_wrapper.get_text(strip=True).replace('Price', '').strip()
+        price = clean_price(price_wrapper.get_text(strip=True))
 
         parts.append({'Component': component, 'Name': name, 'Price': price})
 
