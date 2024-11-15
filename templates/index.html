@@ -26,125 +26,226 @@
             }
         }
 
-        /* Rest of the styling */
-        body {
-            font-family: 'Roboto', sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
+/* Dark Mode Styles */
+body.dark-mode {
+    background: linear-gradient(300deg, #204a47, #304330, #312e66);
+    background-size: 180% 180%;
+    color: #fff;
+}
 
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
+h1.dark-mode {
+    color: #fff;
+}
 
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: 0 auto;
-        }
+.container.dark-mode {
+    background: #333;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
 
-        form {
-            margin-bottom: 20px;
-        }
+.container.dark-mode input[type="text"] {
+    background: #444;
+    color: #fff;
+    border: 1px solid #555;
+}
 
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
+.container.dark-mode button {
+    background-color: #3498db; /* Match the blue color */
+    color: white;
+    border: 1px solid #555;
+}
 
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+.container.dark-mode button:hover {
+    background-color: #2980b9;
+}
 
-        button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-        }
+.footer.dark-mode {
+    color: #bbb;
+}
 
-        button:hover {
-            background-color: #2980b9;
-        }
+.footer.dark-mode a {
+    color: #bbb;
+}
 
-        #downloadButton {
-            display: none;
-            background-color: #27ae60;
-        }
+.footer.dark-mode img {
+    filter: none;  /* Remove the filter */
+}
 
-        #downloadButton:hover {
-            background-color: #219a52;
-        }
+/* Table header in dark mode */
+body.dark-mode th {
+    background-color: #333;
+}
 
-        .table-container {
-            margin-top: 20px;
-            overflow-x: auto;
-        }
+/* Rest of the styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
 
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-        th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
+form {
+    margin-bottom: 20px;
+}
 
-        tr:hover {
-            background-color: #f5f5f5;
-        }
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
 
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #777;
-        }
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
-        #loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
 
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
+button:hover {
+    background-color: #2980b9;
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+#downloadButton {
+    display: none;
+    background-color: #27ae60;
+}
+
+#downloadButton:hover {
+    background-color: #219a52;
+}
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+#loading {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Dark mode toggle button (switch style) */
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 70px;  /* Increased width */
+    height: 25px; /* Increased height */
+    background: linear-gradient(145deg, #2c3e50, #878787); /* Gradient background */
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    transform: scale(1);  /* Default scale */
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.05);  /* Slight zoom effect on hover */
+}
+
+.dark-mode-toggle span {
+    width: 26px;  /* Size of the slider */
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    transition: left 0.3s ease, transform 0.3s ease;  /* Smooth sliding on both left and vertical position */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for the button */
+    position: absolute;
+    top: 50%;  /* Center vertically */
+    transform: translateY(-50%);  /* Center vertically */
+}
+
+/* Light mode - Circle at left edge */
+.dark-mode-toggle span {
+    left: 5px;  /* Position at the left edge */
+}
+
+/* Dark mode - Circle at right edge */
+.dark-mode-toggle.dark span {
+    left: calc(100% - 31px);  /* Position at the right edge, accounting for the circle's width */
+}
+
+/* Dark mode background color */
+.dark-mode-toggle.dark {
+    background: linear-gradient(145deg, #d9d9d9, #878787); /* Darker gradient for dark mode */
+}
+
     </style>
 </head>
 <body class="gradient-background">
+    <div class="dark-mode-toggle" id="darkModeToggle">
+        <span></span>
+    </div>
+
     <h1>PCPartPicker List Scraper</h1>
     <div class="container">
         <form id="scraperForm">
@@ -178,23 +279,23 @@
         <!-- Moved the download button here -->
         <button type="button" id="downloadButton">Download CSV</button>
     </div>
+
     <div class="footer">
         <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/reillymoonen/pcpartpicker-spreadsheet-converter">PCPartPicker List Scraper</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/reillymoonen">Reilly Moonen</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
     </div>
 
     <script>
         let currentData = null;
+        let darkMode = false;
 
         document.getElementById('scraperForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const url = document.getElementById('url').value;
             const loading = document.getElementById('loading');
-            const table = document.getElementById('partsTable');
             const downloadButton = document.getElementById('downloadButton');
-            
+
             loading.style.display = 'block';
-            table.style.display = 'none';
             downloadButton.style.display = 'none';
 
             try {
@@ -275,6 +376,16 @@
 
             document.getElementById('partsTable').style.display = 'table';
         }
+
+        // Toggle dark mode
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+            document.querySelector('h1').classList.toggle('dark-mode', darkMode);
+            document.querySelector('.container').classList.toggle('dark-mode', darkMode);
+            document.querySelector('.footer').classList.toggle('dark-mode', darkMode);
+            this.classList.toggle('dark', darkMode);
+        });
     </script>
 </body>
 </html>
