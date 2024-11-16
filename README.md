@@ -15,7 +15,7 @@ Before running the app, make sure you have the following dependencies installed:
 
 ### Install Dependencies
 
-You can install all required dependencies by creating a `requirements.txt` file and running the following command:
+You can install all required dependencies by running the `requirements.txt` file with the following command:
 
 **Install Dependencies**:
 ```bash
