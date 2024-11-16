@@ -1,4 +1,4 @@
-# Web App Project
+# PCPARTPICKER spreadsheet converter
 
 This project is a web application built with **Flask** and various dependencies to provide specific functionality. Below you will find instructions on how to run the project, its dependencies, and how to use the individual files.
 
