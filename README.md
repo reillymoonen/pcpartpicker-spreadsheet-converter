@@ -2,6 +2,14 @@
 
 This project is a web application built with **Flask** and various dependencies to provide specific functionality. Below you will find instructions on how to run the project, its dependencies, and how to use the individual files.
 
+## Download the Latest Release
+
+You can download the latest release of the project from the following link:
+
+**[Download Latest Release](https://github.com/reillymoonen/pcpartpicker-spreadsheet-converter/releases/latest)**
+
+This release includes the latest features and bug fixes. Once downloaded, extract the files and follow the setup instructions below.
+
 ## Prerequisites
 
 Before running the app, make sure you have the following dependencies installed:
