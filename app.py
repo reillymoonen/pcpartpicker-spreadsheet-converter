@@ -134,20 +134,5 @@ def download_csv():
     
     return render_template('display_parts.html', parts=parts, filename=filename)
 
-@app.route('/download_csv', methods=['POST'])
-def download_csv():
-    parts_json = request.form.get('parts', '')
-    print("Received parts_json:", parts_json)  # Debug output
-
-    if not parts_json:
-        return "No parts data received", 400
-
-    try:
-        parts = json.loads(parts_json)
-        print("Decoded parts:", parts)  # Debug output
-    except json.JSONDecodeError as e:
-        print("JSON decoding error:", e)  # Print the error for debugging
-        return "Invalid JSON data", 400
-
 if __name__ == '__main__':
     app.run(debug=True)
