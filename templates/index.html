@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PC Part Picker Scraper</title>
+    <title>PC Part Picker Scraper</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Gradient Background */
         .gradient-background {
@@ -12,233 +13,190 @@
             background-size: 240% 240%;
             animation: gradient-animation 40s ease infinite;
             min-height: 100vh;
+            padding-top: 50px;
         }
 
         @keyframes gradient-animation {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-/* Dark Mode Styles */
-body.dark-mode {
-    background: linear-gradient(300deg, #204a47, #304330, #312e66);
-    background-size: 180% 180%;
-    color: #fff;
-}
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: linear-gradient(300deg, #204a47, #304330, #312e66);
+            background-size: 180% 180%;
+            color: #fff;
+        }
 
-h1.dark-mode {
-    color: #fff;
-}
+        .dark-mode h1 { color: #fff; }
 
-.container.dark-mode {
-    background: #333;
-    color: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
+        .container.dark-mode {
+            background: #333;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
 
-.container.dark-mode input[type="text"] {
-    background: #444;
-    color: #fff;
-    border: 1px solid #555;
-}
+        .dark-mode input[type="text"] {
+            background: #444;
+            color: #fff;
+            border: 1px solid #555;
+        }
 
-.container.dark-mode button {
-    background-color: #3498db; /* Match the blue color */
-    color: white;
-    border: 1px solid #555;
-}
+        .dark-mode button {
+            background-color: #3498db;
+            color: white;
+            border: 1px solid #555;
+        }
 
-.container.dark-mode button:hover {
-    background-color: #2980b9;
-}
+        .dark-mode button:hover {
+            background-color: #2980b9;
+        }
 
-.footer.dark-mode {
-    color: #bbb;
-}
+        .dark-mode .footer {
+            color: #bbb;
+        }
 
-.footer.dark-mode a {
-    color: #bbb;
-}
+        .dark-mode .footer a {
+            color: #bbb;
+        }
 
-.footer.dark-mode img {
-    filter: none;  /* Remove the filter */
-}
+        .dark-mode th {
+            background-color: #333;
+        }
 
-/* Table header in dark mode */
-body.dark-mode th {
-    background-color: #333;
-}
+        /* Base styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            margin: 0;
+        }
 
-/* Rest of the styling */
-body {
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-}
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-h1 {
-    text-align: center;
-    color: #2c3e50;
-}
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
 
-.container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 0 auto;
-}
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
 
-form {
-    margin-bottom: 20px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-label {
-    display: block;
-    margin: 10px 0 5px;
-}
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
 
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
 
-button {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-}
+        #downloadButton {
+            display: none;
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
 
-button:hover {
-    background-color: #2980b9;
-}
+        #downloadButton:hover {
+            background-color: #219a52;
+        }
 
-#downloadButton {
-    display: none;
-    background-color: #27ae60;
-}
+        #loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
 
-#downloadButton:hover {
-    background-color: #219a52;
-}
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
 
-.table-container {
-    margin-top: 20px;
-    overflow-x: auto;
-}
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 70px;
+            height: 34px;
+            background: linear-gradient(145deg, #2c3e50, #878787);
+            border-radius: 35px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            transform: scale(1);
+        }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
+        .dark-mode-toggle:hover {
+            transform: scale(1.05);
+        }
 
-th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-}
+        .dark-mode-toggle span {
+            width: 26px;
+            height: 26px;
+            background-color: white;
+            border-radius: 50%;
+            transition: left 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 5px;
+        }
 
-.footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.9em;
-    color: #777;
-}
+        .dark-mode-toggle.dark span {
+            left: calc(100% - 31px);
+        }
 
-#loading {
-    display: none;
-    text-align: center;
-    margin: 20px 0;
-}
+        .dark-mode-toggle.dark {
+            background: linear-gradient(145deg, #d9d9d9, #878787);
+        }
 
-.spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Dark mode toggle button (switch style) */
-.dark-mode-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 70px;  /* Increased width */
-    height: 25px; /* Increased height */
-    background: linear-gradient(145deg, #2c3e50, #878787); /* Gradient background */
-    border-radius: 35px;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
-    transform: scale(1);  /* Default scale */
-}
-
-.dark-mode-toggle:hover {
-    transform: scale(1.05);  /* Slight zoom effect on hover */
-}
-
-.dark-mode-toggle span {
-    width: 26px;  /* Size of the slider */
-    height: 26px;
-    background-color: white;
-    border-radius: 50%;
-    transition: left 0.3s ease, transform 0.3s ease;  /* Smooth sliding on both left and vertical position */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for the button */
-    position: absolute;
-    top: 50%;  /* Center vertically */
-    transform: translateY(-50%);  /* Center vertically */
-}
-
-/* Light mode - Circle at left edge */
-.dark-mode-toggle span {
-    left: 5px;  /* Position at the left edge */
-}
-
-/* Dark mode - Circle at right edge */
-.dark-mode-toggle.dark span {
-    left: calc(100% - 31px);  /* Position at the right edge, accounting for the circle's width */
-}
-
-/* Dark mode background color */
-.dark-mode-toggle.dark {
-    background: linear-gradient(145deg, #d9d9d9, #878787); /* Darker gradient for dark mode */
-}
-
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+            padding: 20px;
+        }
     </style>
 </head>
 <body class="gradient-background">
@@ -246,21 +204,24 @@ th {
         <span></span>
     </div>
 
-    <h1>PCPartPicker List Scraper</h1>
     <div class="container">
-        <form id="scraperForm">
-            <label for="url">Enter URL:</label>
-            <input type="text" id="url" name="url" placeholder="https://pcpartpicker.com/list/..." required>
-            
-            <label for="filename">Enter Filename (without .csv extension):</label>
-            <input type="text" id="filename" name="filename" placeholder="my_parts_list" required>
+        <h1>PCPartPicker List Scraper</h1>
 
-            <button type="submit">Fetch Parts</button>
+        <form id="scraperForm" class="p-4 shadow-sm rounded bg-light">
+            <div class="mb-3">
+                <label for="url" class="form-label">Enter URL:</label>
+                <input type="text" id="url" name="url" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
+                <input type="text" id="filename" name="filename" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Fetch Parts</button>
         </form>
 
         <div id="loading">
             <div class="spinner"></div>
-            <p>Fetching parts...</p>
+            <p>Loading...</p>
         </div>
 
         <div class="table-container">
@@ -276,21 +237,31 @@ th {
             </table>
         </div>
 
-        <!-- Moved the download button here -->
         <button type="button" id="downloadButton">Download CSV</button>
     </div>
 
     <div class="footer">
-        <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/reillymoonen/pcpartpicker-spreadsheet-converter">PCPartPicker List Scraper</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/reillymoonen">Reilly Moonen</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+        <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+            <a property="dct:title" rel="cc:attributionURL" href="https://github.com/reillymoonen/pcpartpicker-spreadsheet-converter">PCPartPicker List Scraper</a> by
+            <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/reillymoonen">Reilly Moonen</a> is licensed under
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                CC BY-SA 4.0
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt="">
+            </a>
+        </p>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let currentData = null;
         let darkMode = false;
 
+        // Form submission handler
         document.getElementById('scraperForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const url = document.getElementById('url').value;
             const loading = document.getElementById('loading');
             const downloadButton = document.getElementById('downloadButton');
@@ -314,7 +285,11 @@ th {
                     displayData(result.data);
                     downloadButton.style.display = 'block';
                 } else {
-                    alert('Failed to fetch parts. Please try again.');
+                    if (result.message.includes("Invalid URL")) {
+                        alert('Invalid URL. Please enter a valid PCPartPicker list URL.');
+                    } else {
+                        alert('Failed to fetch parts. Please try again.');
+                    }
                 }
             } catch (error) {
                 alert('An error occurred. Please try again.');
@@ -324,6 +299,7 @@ th {
             }
         });
 
+        // Download button handler
         document.getElementById('downloadButton').addEventListener('click', async function() {
             if (!currentData) return;
 
@@ -360,10 +336,11 @@ th {
             }
         });
 
+        // Display data function
         function displayData(data) {
             const tbody = document.querySelector('#partsTable tbody');
             tbody.innerHTML = '';
-            
+
             data.forEach(part => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -377,79 +354,14 @@ th {
             document.getElementById('partsTable').style.display = 'table';
         }
 
-        // Toggle dark mode
+        // Dark mode toggle
         document.getElementById('darkModeToggle').addEventListener('click', function() {
             darkMode = !darkMode;
             document.body.classList.toggle('dark-mode', darkMode);
-            document.querySelector('h1').classList.toggle('dark-mode', darkMode);
             document.querySelector('.container').classList.toggle('dark-mode', darkMode);
             document.querySelector('.footer').classList.toggle('dark-mode', darkMode);
             this.classList.toggle('dark', darkMode);
         });
-
-        document.getElementById('scraperForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const url = document.getElementById('url').value;
-            const loading = document.getElementById('loading');
-            const downloadButton = document.getElementById('downloadButton');
-
-            loading.style.display = 'block';
-            downloadButton.style.display = 'none';
-
-            try {
-                const response = await fetch('/fetch_parts', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `url=${encodeURIComponent(url)}`
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    currentData = result.data;
-                    displayData(result.data);
-                    downloadButton.style.display = 'block';
-                } else {
-                    // Show specific error message based on the response
-                    if (result.message.includes("Invalid URL")) {
-                        alert('Invalid URL. Please enter a valid PCPartPicker list URL.');
-                    } else {
-                        alert('Failed to fetch parts. Please try again.');
-                    }
-                }
-            } catch (error) {
-                alert('An error occurred. Please try again.');
-                console.error('Error:', error);
-            } finally {
-                loading.style.display = 'none';
-            }
-        });
     </script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { padding-top: 50px; }
-        .container { max-width: 600px; }
-        h1 { text-align: center; margin-bottom: 20px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>PC Part Picker List Scraper</h1>
-        <form action="/fetch_parts" method="POST" class="p-4 shadow-sm rounded bg-light">
-            <div class="mb-3">
-                <label for="url" class="form-label">Enter URL:</label>
-                <input type="text" id="url" name="url" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
-                <input type="text" id="filename" name="filename" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Fetch Parts</button>
-        </form>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
