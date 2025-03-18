@@ -58,7 +58,7 @@
         }
 
         .dark-mode .footer a {
-            color: #42cfe7;
+            color: #bbb;
         }
 
         .dark-mode th {
@@ -115,8 +115,12 @@
             text-align: center;
         }
 
-        #downloadButton {
+        #downloadSection {
             display: none;
+            margin-top: 20px;
+        }
+
+        #downloadButton {
             background-color: #27ae60;
             color: white;
             padding: 10px 15px;
@@ -218,10 +222,6 @@
                 <label for="url" class="form-label">Enter URL:</label>
                 <input type="text" id="url" name="url" class="form-control" required>
             </div>
-            <div class="mb-3">
-                <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
-                <input type="text" id="filename" name="filename" class="form-control" required>
-            </div>
             <button type="submit" class="btn btn-primary w-100">Fetch Parts</button>
         </form>
 
@@ -234,7 +234,7 @@
             <table id="partsTable" style="display: none;">
                 <thead>
                     <tr>
-                        <th class="number-column"></th>
+                        <th class="number-column">#</th>
                         <th>Component</th>
                         <th>Name</th>
                         <th>Price</th>
@@ -244,7 +244,13 @@
             </table>
         </div>
 
-        <button type="button" id="downloadButton">Download CSV</button>
+        <div id="downloadSection" class="mt-4 p-4 shadow-sm rounded bg-light">
+            <div class="mb-3">
+                <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
+                <input type="text" id="filename" name="filename" class="form-control" required>
+            </div>
+            <button type="button" id="downloadButton">Download CSV</button>
+        </div>
     </div>
 
     <div class="footer">
@@ -271,10 +277,10 @@
 
             const url = document.getElementById('url').value;
             const loading = document.getElementById('loading');
-            const downloadButton = document.getElementById('downloadButton');
+            const downloadSection = document.getElementById('downloadSection');
 
             loading.style.display = 'block';
-            downloadButton.style.display = 'none';
+            downloadSection.style.display = 'none';
 
             try {
                 const response = await fetch('/fetch_parts', {
@@ -290,7 +296,7 @@
                 if (result.success) {
                     currentData = result.data;
                     displayData(result.data);
-                    downloadButton.style.display = 'block';
+                    downloadSection.style.display = 'block';
                 } else {
                     if (result.message.includes("Invalid URL")) {
                         alert('Invalid URL. Please enter a valid PCPartPicker list URL.');
@@ -377,6 +383,7 @@
             document.querySelector('.container').classList.toggle('dark-mode', darkMode);
             document.querySelector('.footer').classList.toggle('dark-mode', darkMode);
             document.querySelector('#scraperForm').classList.toggle('bg-dark', darkMode);
+            document.querySelector('#downloadSection').classList.toggle('bg-dark', darkMode);
             this.classList.toggle('dark', darkMode);
         });
     </script>
