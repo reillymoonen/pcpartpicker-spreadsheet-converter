@@ -58,7 +58,7 @@
         }
 
         .dark-mode .footer a {
-            color: #bbb;
+            color: #42cfe7;
         }
 
         .dark-mode th {
@@ -107,6 +107,12 @@
         th {
             background-color: #f8f9fa;
             font-weight: bold;
+        }
+
+        /* Number column styling */
+        .number-column {
+            width: 60px;
+            text-align: center;
         }
 
         #downloadButton {
@@ -228,6 +234,7 @@
             <table id="partsTable" style="display: none;">
                 <thead>
                     <tr>
+                        <th class="number-column"></th>
                         <th>Component</th>
                         <th>Name</th>
                         <th>Price</th>
@@ -306,13 +313,21 @@
             const filename = document.getElementById('filename').value || 'parts_list';
 
             try {
+                // Add numbering to the data before downloading
+                const numberedData = currentData.map((part, index) => {
+                    return {
+                        Number: index + 1,
+                        ...part
+                    };
+                });
+
                 const response = await fetch('/download_csv', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        data: currentData,
+                        data: numberedData,
                         filename: filename
                     })
                 });
@@ -341,9 +356,10 @@
             const tbody = document.querySelector('#partsTable tbody');
             tbody.innerHTML = '';
 
-            data.forEach(part => {
+            data.forEach((part, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
+                    <td class="number-column">${index + 1}</td>
                     <td>${part.Component}</td>
                     <td>${part.Name}</td>
                     <td>${part.Price}</td>
@@ -363,7 +379,6 @@
             document.querySelector('#scraperForm').classList.toggle('bg-dark', darkMode);
             this.classList.toggle('dark', darkMode);
         });
-
     </script>
 </body>
 </html>
