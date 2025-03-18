@@ -6,6 +6,7 @@
     <title>PC Part Picker Scraper</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet" />
     <style>
         /* Gradient Background */
         .gradient-background {
@@ -120,6 +121,25 @@
             margin-top: 20px;
         }
 
+        .input-with-button {
+            display: flex;
+            gap: 10px;
+        }
+
+        .datetime-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0 15px;
+            white-space: nowrap;
+        }
+
+        .datetime-button:hover {
+            background-color: #2980b9;
+        }
+
         #downloadButton {
             background-color: #27ae60;
             color: white;
@@ -160,7 +180,7 @@
         .dark-mode-toggle {
             position: fixed;
             bottom: 20px;
-            right: 20px;
+            left: 20px;
             width: 70px;
             height: 34px;
             background: linear-gradient(145deg, #2c3e50, #878787);
@@ -247,7 +267,10 @@
         <div id="downloadSection" class="mt-4 p-4 shadow-sm rounded bg-light">
             <div class="mb-3">
                 <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
-                <input type="text" id="filename" name="filename" class="form-control" required>
+                <div class="input-with-button">
+                    <input type="text" id="filename" name="filename" class="form-control" required>
+                    <button type="button" id="datetimeButton" class="datetime-button">Use Date/Time</button>
+                </div>
             </div>
             <button type="button" id="downloadButton">Download CSV</button>
         </div>
@@ -310,6 +333,24 @@
             } finally {
                 loading.style.display = 'none';
             }
+        });
+
+        // Date/Time button handler
+        document.getElementById('datetimeButton').addEventListener('click', function() {
+            const now = new Date();
+
+            // Format: YYYY-MM-DD_HH-MM-SS
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const timestamp = `pcparts_${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+
+            // Set the value in the filename input
+            document.getElementById('filename').value = timestamp;
         });
 
         // Download button handler
