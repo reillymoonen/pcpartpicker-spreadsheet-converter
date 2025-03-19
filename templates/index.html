@@ -40,21 +40,14 @@
             </tr>
             </thead>
             <tbody></tbody>
-            <tfoot>
-            <tr class="total-row">
-                <td colspan="3" style="text-align: right;">Total:</td>
-                <td id="totalPrice"></td>
-                <td></td>
-            </tr>
-            </tfoot>
         </table>
     </div>
 
     <div id="downloadSection" class="mt-4 p-4 shadow-sm rounded bg-light">
         <div class="mb-3">
-            <label for="filename" class="form-label">(optional) Enter Filename (without .csv extension):</label>
+            <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
             <div class="input-with-button">
-                <input type="text" id="filename" name="filename" class="form-control" required>
+                <input type="text" id="filename" name="filename" placeholder="optional" class="form-control" required>
                 <button type="button" id="datetimeButton" class="datetime-button">Use Date/Time</button>
             </div>
         </div>

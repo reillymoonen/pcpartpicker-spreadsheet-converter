@@ -8,9 +8,9 @@
 }
 
 @keyframes gradient-animation {
-    0% { background-position: 0% 50%; }
+    0% { background-position: 0 50%; }
     50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    100% { background-position: 0 50%; }
 }
 
 /* Dark Mode Styles */
@@ -117,14 +117,25 @@ th {
 }
 
 .delete-btn {
-    background-color: #dc3545 !important; /* Bootstrap's red color */
-    color: white !important;
-    border: none !important;
+    background-color: #ff4d4d !important; /* Red background */
+    color: white !important; /* White text */
+    border: none !important; /* Remove border */
+    width: 24px; /* Adjust size as needed */
+    height: 24px;
+    border-radius: 50%; /* Make it a circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px; /* Adjust font size as needed */
+    line-height: 1; /* Ensure the X is centered */
+    padding: 0 !important; /* Remove padding */
+    transition: background-color 0.1s ease-in-out; /* Smooth transition for hover effect */
 }
 
 .delete-btn:hover {
-    background-color: #c82333 !important; /* Darker red on hover */
+    background-color: #6e0000 !important; /* Darker red on hover */
 }
+
 
 .datetime-button {
     background-color: #3498db;
