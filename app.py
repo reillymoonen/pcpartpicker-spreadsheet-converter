@@ -137,7 +137,3 @@ def download_csv():
 if __name__ == '__main__':
     app.run(debug=True)
 
-
-
-# number each item
-# way to remove
