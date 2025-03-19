@@ -244,6 +244,16 @@
             color: #777;
             padding: 20px;
         }
+
+        /* Total cost row styling */
+        .total-row {
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+
+        .dark-mode .total-row {
+            background-color: #444;
+        }
     </style>
 </head>
 <body class="gradient-background">
@@ -278,6 +288,13 @@
                     </tr>
                 </thead>
                 <tbody></tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td colspan="3" style="text-align: right;">Total:</td>
+                        <td id="totalPrice"></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
 
@@ -385,6 +402,15 @@
                     };
                 });
 
+                // Add total row to CSV
+                const totalCost = calculateTotal(currentData);
+                numberedData.push({
+                    Number: "",
+                    Component: "TOTAL",
+                    Name: "",
+                    Price: totalCost
+                });
+
                 const response = await fetch('/download_csv', {
                     method: 'POST',
                     headers: {
@@ -415,6 +441,30 @@
             }
         });
 
+        // Function to calculate total cost
+        function calculateTotal(data) {
+            let total = 0;
+            data.forEach(part => {
+                // Extract numerical value from price string (removing currency symbols, etc.)
+                const priceStr = part.Price;
+                if (priceStr && priceStr !== 'N/A') {
+                    // Extract numbers from price string (handles different currencies)
+                    const priceValue = parseFloat(priceStr.replace(/[^0-9.-]+/g, ""));
+                    if (!isNaN(priceValue)) {
+                        total += priceValue;
+                    }
+                }
+            });
+
+            // Format total with currency symbol (using the same format as the price values)
+            // This assumes the currency symbol is consistent across all prices
+            const currencySymbol = data.length > 0 && data[0].Price && data[0].Price !== 'N/A'
+                ? data[0].Price.replace(/[0-9.-]+/g, "").trim()
+                : "$";
+
+            return currencySymbol + total.toFixed(2);
+        }
+
         // Display data function
         function displayData(data) {
             const tbody = document.querySelector('#partsTable tbody');
@@ -424,27 +474,30 @@
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-            <td class="number-column">${index + 1}</td>
-            <td>${part.Component}</td>
-            <td>${part.Name}</td>
-            <td>${part.Price}</td>
-            <td>
-                <button class="btn btn-danger btn-sm delete-btn" data-index="${index}" style="
-                    border-radius: 50%;
-                    width: 24px;
-                    height: 24px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 0;
-                    font-size: 14px;">
-                    ✕
-                </button>
-            </td>
-        `;
+                    <td class="number-column">${index + 1}</td>
+                    <td>${part.Component}</td>
+                    <td>${part.Name}</td>
+                    <td>${part.Price}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm delete-btn" data-index="${index}" style="
+                            border-radius: 50%;
+                            width: 24px;
+                            height: 24px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 0;
+                            font-size: 14px;">
+                            ✕
+                        </button>
+                    </td>
+                `;
 
                 tbody.appendChild(row);
             });
+
+            // Update total price
+            document.getElementById('totalPrice').textContent = calculateTotal(data);
 
             document.getElementById('partsTable').style.display = 'table';
 
