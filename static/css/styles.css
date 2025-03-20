@@ -20,28 +20,39 @@ body.dark-mode {
     color: #fff;
 }
 
-.dark-mode h1 { color: #fff; }
+.dark-mode h1, .dark-mode label {
+    color: #fff;
+}
 
-.container.dark-mode {
+.dark-mode .container {
     background: #333;
     color: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.dark-mode input[type="text"] {
-    background: #444;
-    color: #fff;
-    border: 1px solid #555;
+.dark-mode input[type="text"], .dark-mode .form-control {
+    background: #444 !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
 }
 
-.dark-mode button {
-    background-color: #3498db;
-    color: white;
-    border: 1px solid #555;
+.dark-mode button, .dark-mode .btn-primary {
+    background-color: #3498db !important;
+    color: white !important;
+    border: 1px solid #555 !important;
 }
 
-.dark-mode button:hover {
-    background-color: #2980b9;
+.dark-mode button:hover, .dark-mode .btn-primary:hover {
+    background-color: #2980b9 !important;
+}
+
+.dark-mode #downloadButton {
+    background-color: #27ae60 !important;
+    color: white !important;
+}
+
+.dark-mode #downloadButton:hover {
+    background-color: #219a52 !important;
 }
 
 .dark-mode .footer {
@@ -53,7 +64,13 @@ body.dark-mode {
 }
 
 .dark-mode th {
-    background-color: #333;
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+.dark-mode .bg-light {
+    background-color: #444 !important;
+    color: #fff !important;
 }
 
 /* Base styles */
@@ -136,6 +153,13 @@ th {
     background-color: #6e0000 !important; /* Darker red on hover */
 }
 
+.dark-mode .delete-btn {
+    background-color: #ff4d4d !important;
+}
+
+.dark-mode .delete-btn:hover {
+    background-color: #6e0000 !important;
+}
 
 .datetime-button {
     background-color: #3498db;
@@ -182,6 +206,11 @@ th {
     margin: 0 auto;
 }
 
+.dark-mode .spinner {
+    border: 4px solid #444;
+    border-top: 4px solid #3498db;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -211,6 +240,7 @@ td {
     padding: 5px;
     transition: background 0.3s ease, transform 0.3s ease;
     transform: scale(1);
+    z-index: 1000;
 }
 
 .dark-mode-toggle:hover {
@@ -254,4 +284,8 @@ td {
 
 .dark-mode .total-row {
     background-color: #444;
+}
+
+.dark-mode td {
+    border-bottom: 1px solid #555;
 }

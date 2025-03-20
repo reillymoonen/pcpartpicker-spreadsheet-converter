@@ -1,6 +1,24 @@
 let currentData = null;
 let darkMode = false;
 
+// Check for saved dark mode preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        darkMode = true;
+        document.body.classList.add('dark-mode');
+        document.querySelector('.dark-mode-toggle').classList.add('dark');
+
+        // Apply dark mode to Bootstrap elements
+        const lightElements = document.querySelectorAll('.bg-light');
+        lightElements.forEach(el => {
+            el.classList.remove('bg-light');
+            el.classList.add('bg-dark');
+            el.classList.add('text-white');
+        });
+    }
+});
+
 // Form submission handler
 document.getElementById('scraperForm').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -137,10 +155,18 @@ function displayData(data) {
 
         // Show download section
         downloadSection.style.display = 'block';
+
+        // Apply dark mode to newly created elements if needed
+        if (darkMode) {
+            const lightElements = document.querySelectorAll('.bg-light');
+            lightElements.forEach(el => {
+                el.classList.remove('bg-light');
+                el.classList.add('bg-dark');
+                el.classList.add('text-white');
+            });
+        }
     }
 }
-
-
 
 // Delete row function
 function deleteRow(index) {
@@ -156,4 +182,25 @@ document.querySelector('.dark-mode-toggle').addEventListener('click', function()
     darkMode = !darkMode;
     document.body.classList.toggle('dark-mode');
     this.classList.toggle('dark');
+
+    // Toggle dark mode on specific Bootstrap elements
+    const lightElements = document.querySelectorAll('.bg-light');
+    const darkElements = document.querySelectorAll('.bg-dark');
+
+    if (darkMode) {
+        lightElements.forEach(el => {
+            el.classList.remove('bg-light');
+            el.classList.add('bg-dark');
+            el.classList.add('text-white');
+        });
+    } else {
+        darkElements.forEach(el => {
+            el.classList.remove('bg-dark');
+            el.classList.remove('text-white');
+            el.classList.add('bg-light');
+        });
+    }
+
+    // Save dark mode preference in localStorage
+    localStorage.setItem('darkMode', darkMode);
 });
