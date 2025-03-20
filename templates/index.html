@@ -20,8 +20,8 @@
         <div class="mb-3">
             <label for="url" class="form-label">Enter Permalink:</label>
             <div class="input-with-button">
-            <input type="text" id="url" name="url" class="form-control" placeholder="https://pcpartpicker.com/list/..." required>
-            <button type="button" id="pasteButton" class="secondary-button">Paste</button>
+                <input type="text" id="url" name="url" class="form-control" placeholder="https://pcpartpicker.com/list/..." required>
+                <button type="button" id="pasteButton" class="secondary-button">Paste</button>
             </div>
         </div>
         <button type="submit" class="btn btn-primary w-100">Fetch Parts</button>
@@ -37,9 +37,10 @@
             <thead>
             <tr>
                 <th class="number-column"></th>
-                <th>Component</th>
-                <th>Name</th>
-                <th>Price</th>
+                <th>Component <button class="sort-btn" data-sort="component">↕</button></th>
+                <th>Name <button class="sort-btn" data-sort="name">↕</button></th>
+                <th>Price <button class="sort-btn" data-sort="price">↕</button></th>
+                <th></th>
             </tr>
             </thead>
             <tbody></tbody>

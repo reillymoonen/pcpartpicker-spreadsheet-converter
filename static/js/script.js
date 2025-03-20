@@ -1,6 +1,8 @@
 let currentData = null;
 let darkMode = false;
 let dragSrcIndex = null;
+let sortColumn = null;
+let sortDirection = 'asc';
 
 // Check for saved dark mode preference on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -18,6 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
             el.classList.add('text-white');
         });
     }
+
+    // Add delegation for sort buttons
+    document.querySelector('thead').addEventListener('click', function(e) {
+        if (e.target.classList.contains('sort-btn')) {
+            sortTable(e.target.dataset.sort);
+        }
+    });
 });
 
 document.getElementById('pasteButton').addEventListener('click', async () => {
@@ -187,6 +196,9 @@ function displayData(data) {
                 el.classList.add('text-white');
             });
         }
+
+        // Update sort button indicators if sorting was previously applied
+        updateSortButtons();
     }
 }
 
@@ -249,6 +261,77 @@ function deleteRow(index) {
     if (currentData.length === 0) {
         displayData([]);
     }
+}
+
+// Sort table function
+function sortTable(column) {
+    if (sortColumn === column) {
+        // Toggle direction if clicking the same column
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        // Set new column and default to ascending
+        sortColumn = column;
+        sortDirection = 'asc';
+    }
+
+    if (!currentData || currentData.length === 0) return;
+
+    currentData.sort((a, b) => {
+        let valueA, valueB;
+
+        if (column === 'component') {
+            valueA = a.Component.toLowerCase();
+            valueB = b.Component.toLowerCase();
+            return sortDirection === 'asc' ?
+                valueA.localeCompare(valueB) :
+                valueB.localeCompare(valueA);
+        }
+        else if (column === 'name') {
+            valueA = a.Name.toLowerCase();
+            valueB = b.Name.toLowerCase();
+            return sortDirection === 'asc' ?
+                valueA.localeCompare(valueB) :
+                valueB.localeCompare(valueA);
+        }
+        else if (column === 'price') {
+            // Parse price values
+            valueA = parsePriceValue(a.Price);
+            valueB = parsePriceValue(b.Price);
+
+            // Handle N/A values
+            if (isNaN(valueA)) valueA = sortDirection === 'asc' ? Infinity : -Infinity;
+            if (isNaN(valueB)) valueB = sortDirection === 'asc' ? Infinity : -Infinity;
+
+            return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+        }
+        return 0;
+    });
+
+    // Update display after sorting
+    displayData(currentData);
+
+    // Update sort button indicators
+    updateSortButtons();
+}
+
+// Helper function to parse price values
+function parsePriceValue(priceStr) {
+    if (!priceStr || priceStr === 'N/A') return NaN;
+    return parseFloat(priceStr.replace(/[^0-9.-]+/g, ""));
+}
+
+// Update sort button indicators
+function updateSortButtons() {
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+        const column = btn.dataset.sort;
+        if (column === sortColumn) {
+            btn.textContent = sortDirection === 'asc' ? '↑' : '↓';
+            btn.classList.add('active-sort');
+        } else {
+            btn.textContent = '↕';
+            btn.classList.remove('active-sort');
+        }
+    });
 }
 
 // Dark mode toggle

@@ -142,6 +142,35 @@ th, td {
 th {
     background-color: #f8f9fa;
     font-weight: bold;
+    padding: 12px 8px;
+    position: relative;
+}
+
+/* Sort button styles */
+.sort-btn {
+    background: none !important;
+    border: none !important;
+    color: inherit !important;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 0 0 5px !important;
+    vertical-align: middle;
+    transition: transform 0.2s;
+}
+
+.sort-btn:hover {
+    transform: scale(1.2);
+    color: #3498db !important;
+}
+
+.sort-btn.active-sort {
+    color: #3498db !important;
+    transform: scale(1.2);
+}
+
+.dark-mode .sort-btn:hover,
+.dark-mode .sort-btn.active-sort {
+    color: #5dade2 !important;
 }
 
 /* Number column styling */
