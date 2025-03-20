@@ -36,6 +36,33 @@ body.dark-mode {
     border: 1px solid #555 !important;
 }
 
+/* Placeholder text color for dark mode */
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder,
+.dark-mode .form-control::placeholder {
+    color: #aaa !important;
+    opacity: 1;
+}
+
+/* For older browsers */
+.dark-mode input::-webkit-input-placeholder,
+.dark-mode textarea::-webkit-input-placeholder,
+.dark-mode .form-control::-webkit-input-placeholder {
+    color: #aaa !important;
+}
+
+.dark-mode input::-moz-placeholder,
+.dark-mode textarea::-moz-placeholder,
+.dark-mode .form-control::-moz-placeholder {
+    color: #aaa !important;
+}
+
+.dark-mode input:-ms-input-placeholder,
+.dark-mode textarea:-ms-input-placeholder,
+.dark-mode .form-control:-ms-input-placeholder {
+    color: #aaa !important;
+}
+
 .dark-mode button, .dark-mode .btn-primary {
     background-color: #3498db !important;
     color: white !important;
