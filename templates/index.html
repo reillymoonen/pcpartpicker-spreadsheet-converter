@@ -19,7 +19,10 @@
     <form id="scraperForm" class="p-4 shadow-sm rounded bg-light">
         <div class="mb-3">
             <label for="url" class="form-label">Enter Permalink:</label>
+            <div class="input-with-button">
             <input type="text" id="url" name="url" class="form-control" placeholder="https://pcpartpicker.com/list/..." required>
+            <button type="button" id="pasteButton" class="secondary-button">Paste</button>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary w-100">Fetch Parts</button>
     </form>
@@ -48,7 +51,7 @@
             <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
             <div class="input-with-button">
                 <input type="text" id="filename" name="filename" placeholder="optional" class="form-control" required>
-                <button type="button" id="datetimeButton" class="datetime-button">Use Date/Time</button>
+                <button type="button" id="datetimeButton" class="secondary-button">Use Date/Time</button>
             </div>
         </div>
         <button type="button" id="downloadButton">Download CSV</button>

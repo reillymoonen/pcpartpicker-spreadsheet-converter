@@ -1,5 +1,6 @@
 let currentData = null;
 let darkMode = false;
+let dragSrcIndex = null;
 
 // Check for saved dark mode preference on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -16,6 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
             el.classList.add('bg-dark');
             el.classList.add('text-white');
         });
+    }
+});
+
+document.getElementById('pasteButton').addEventListener('click', async () => {
+    try {
+        const text = await navigator.clipboard.readText(); // Get text from clipboard
+        // document.getElementById('pasteTarget').textContent = text; // Display the text
+        document.getElementById('url').value = text; // If using an input or textarea
+    } catch (err) {
+        console.error('Failed to read clipboard contents: ', err);
     }
 });
 
@@ -133,6 +144,17 @@ function displayData(data) {
         table.style.display = 'table';
         data.forEach((part, index) => {
             const row = document.createElement('tr');
+            row.setAttribute('draggable', 'true');
+            row.dataset.index = index;
+            row.classList.add('draggable-row');
+
+            // Add drag event listeners
+            row.addEventListener('dragstart', handleDragStart);
+            row.addEventListener('dragover', handleDragOver);
+            row.addEventListener('dragleave', handleDragLeave);
+            row.addEventListener('drop', handleDrop);
+            row.addEventListener('dragend', handleDragEnd);
+
             row.innerHTML = `
                 <td class="number-column">${index + 1}</td>
                 <td>${part.Component}</td>
@@ -166,6 +188,58 @@ function displayData(data) {
             });
         }
     }
+}
+
+// Drag and drop handlers
+function handleDragStart(e) {
+    this.style.opacity = '0.4';
+    dragSrcIndex = parseInt(this.dataset.index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', dragSrcIndex);
+}
+
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault(); // Necessary to allow drop
+    }
+    e.dataTransfer.dropEffect = 'move';
+    this.classList.add('drag-over');
+    return false;
+}
+
+function handleDragLeave(e) {
+    this.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+    if (e.stopPropagation) {
+        e.stopPropagation(); // Stops some browsers from redirecting
+    }
+
+    this.classList.remove('drag-over');
+
+    // Don't do anything if dropping on the same row
+    const dragTargetIndex = parseInt(this.dataset.index);
+    if (dragSrcIndex === dragTargetIndex) {
+        return false;
+    }
+
+    // Reorder the array
+    const movedItem = currentData.splice(dragSrcIndex, 1)[0];
+    currentData.splice(dragTargetIndex, 0, movedItem);
+
+    // Update the display
+    displayData(currentData);
+
+    return false;
+}
+
+function handleDragEnd(e) {
+    // Reset the opacity of all rows
+    document.querySelectorAll('.draggable-row').forEach(row => {
+        row.style.opacity = '1';
+        row.classList.remove('drag-over');
+    });
 }
 
 // Delete row function

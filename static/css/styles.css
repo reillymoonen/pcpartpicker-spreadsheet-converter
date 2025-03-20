@@ -188,7 +188,7 @@ th {
     background-color: #6e0000 !important;
 }
 
-.datetime-button {
+.secondary-button {
     background-color: #3498db;
     color: white;
     border: none;
@@ -198,7 +198,7 @@ th {
     white-space: nowrap;
 }
 
-.datetime-button:hover {
+.secondary-button:hover {
     background-color: #2980b9;
 }
 
@@ -315,4 +315,45 @@ td {
 
 .dark-mode td {
     border-bottom: 1px solid #555;
+}
+
+/* Row hover effect */
+#partsTable tbody tr:not(.total-row) {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#partsTable tbody tr:not(.total-row):hover {
+    background-color: #e1e1e1;
+    color: #000000;
+}
+
+/* Dark mode hover effect */
+.dark-mode #partsTable tbody tr:not(.total-row):hover {
+    background-color: #424242;
+    color: #ffffff;
+}
+
+/* Drag and Drop Styles */
+.draggable-row {
+    cursor: grab;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.drag-over {
+    background-color: rgba(52, 152, 219, 0.3) !important;
+    border-top: 2px solid #3498db !important;
+}
+
+.dark-mode .drag-over {
+    background-color: rgba(52, 152, 219, 0.3) !important;
+    border-top: 2px solid #3498db !important;
+}
+
+/* Optional: Add a grab cursor */
+.draggable-row td:first-child {
+    cursor: grab;
+}
+
+.draggable-row td:first-child:active {
+    cursor: grabbing;
 }
