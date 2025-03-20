@@ -105,7 +105,7 @@ def fetch_parts():
     url = request.form['url']
     
     # Check if the URL looks valid (basic regex for URL format)
-    if not re.match(r'https?://(?:www\.)?pcpartpicker\.com/list/\w+', url):
+    if not re.match(r'https?://(?:www\.)?(?:[a-z]{2,5}\.)?pcpartpicker\.com/list/\w+', url):
         return jsonify({'success': False, 'message': 'Invalid URL. Please enter a valid PCPartPicker list URL.'}), 400
     
     parts = fetch_pcpartpicker_list(url)
