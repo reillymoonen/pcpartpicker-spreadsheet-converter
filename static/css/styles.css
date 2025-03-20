@@ -316,3 +316,19 @@ td {
 .dark-mode td {
     border-bottom: 1px solid #555;
 }
+
+/* Row hover effect */
+#partsTable tbody tr:not(.total-row) {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#partsTable tbody tr:not(.total-row):hover {
+    background-color: #e1e1e1;
+    color: #000000;
+}
+
+/* Dark mode hover effect */
+.dark-mode #partsTable tbody tr:not(.total-row):hover {
+    background-color: #424242;
+    color: #ffffff;
+}
