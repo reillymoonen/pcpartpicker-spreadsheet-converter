@@ -13,16 +13,6 @@
     100% { background-position: 0 50%; }
 }
 
-.subheading {
-    font-size: 19px;
-    max-width: 700px;
-    text-align: center;
-    margin: 0 auto; /* Centers the block horizontally */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /* Dark Mode Styles */
 body.dark-mode {
     background: linear-gradient(300deg, #204a47, #304330, #312e66);
@@ -73,17 +63,15 @@ body.dark-mode {
     color: #aaa !important;
 }
 
-<<<<<<< Updated upstream
 .dark-mode button, .dark-mode .btn-primary {
     background-color: #3498db;
     color: white !important;
     border: 1px solid #555;
-=======
-    .dark-mode button, .dark-mode .btn-primary {
-    color: white !important;
->>>>>>> Stashed changes
 }
 
+.dark-mode button:hover, .dark-mode .btn-primary:hover {
+    background-color: #2980b9 !important;
+}
 
 .dark-mode #downloadButton {
     background-color: #27ae60 !important;
@@ -170,6 +158,20 @@ th {
     border: 0 !important;
 }
 
+.sort-btn:hover {
+    transform: scale(1.2);
+    color: #3498db !important;
+}
+
+.sort-btn.active-sort {
+    color: #3498db !important;
+    transform: scale(1.2);
+}
+
+.dark-mode .sort-btn:hover,
+.dark-mode .sort-btn.active-sort {
+    color: #5dade2 !important;
+}
 
 /* Number column styling */
 .number-column {
