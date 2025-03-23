@@ -64,9 +64,9 @@ body.dark-mode {
 }
 
 .dark-mode button, .dark-mode .btn-primary {
-    background-color: #3498db !important;
+    background-color: #3498db;
     color: white !important;
-    border: 1px solid #555 !important;
+    border: 1px solid #555;
 }
 
 .dark-mode button:hover, .dark-mode .btn-primary:hover {
@@ -149,13 +149,13 @@ th {
 /* Sort button styles */
 .sort-btn {
     background: none !important;
-    border: none !important;
     color: inherit !important;
     font-size: 14px;
     cursor: pointer;
     padding: 0 0 0 5px !important;
     vertical-align: middle;
     transition: transform 0.2s;
+    border: 0 !important;
 }
 
 .sort-btn:hover {
