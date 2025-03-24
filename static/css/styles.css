@@ -20,8 +20,21 @@ body.dark-mode {
     color: #fff;
 }
 
+.bg-dark {
+    background: #444444 !important;
+}
+
 .dark-mode h1, .dark-mode label {
     color: #fff;
+}
+
+.subheading {
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto; /* Centers the block horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dark-mode .container {
@@ -31,7 +44,7 @@ body.dark-mode {
 }
 
 .dark-mode input[type="text"], .dark-mode .form-control {
-    background: #444 !important;
+    background: #333333 !important;
     color: #fff !important;
     border: 1px solid #555 !important;
 }
