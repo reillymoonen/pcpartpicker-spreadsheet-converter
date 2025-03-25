@@ -361,3 +361,22 @@ document.querySelector('.dark-mode-toggle').addEventListener('click', function()
     // Save dark mode preference in localStorage
     localStorage.setItem('darkMode', darkMode);
 });
+
+// Help Button and Modal Functionality
+document.getElementById('helpButton').addEventListener('click', function() {
+    const helpModal = document.getElementById('helpModal');
+    helpModal.style.display = 'block';
+});
+
+document.querySelector('.help-close').addEventListener('click', function() {
+    const helpModal = document.getElementById('helpModal');
+    helpModal.style.display = 'none';
+});
+
+// Close modal if user clicks outside of it
+window.addEventListener('click', function(event) {
+    const helpModal = document.getElementById('helpModal');
+    if (event.target === helpModal) {
+        helpModal.style.display = 'none';
+    }
+});

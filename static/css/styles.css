@@ -399,3 +399,112 @@ td {
 .draggable-row td:first-child:active {
     cursor: grabbing;
 }
+
+/* Help Button */
+.help-button {
+    position: fixed;
+    bottom: 18px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    z-index: 1000;
+}
+
+.help-button:hover {
+    transform: scale(1.1);
+    background-color: #2980b9;
+}
+
+.dark-mode .help-button {
+    background-color: #5dade2;
+    color: white;
+}
+
+.dark-mode .help-button:hover {
+    background-color: #3498db;
+}
+
+/* Help Modal */
+.help-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.help-modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.dark-mode .help-modal-content {
+    background-color: #333;
+    color: white;
+}
+
+.help-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.help-close:hover {
+    color: #3498db;
+}
+
+.dark-mode .help-close {
+    color: #ddd;
+}
+
+.dark-mode .help-close:hover {
+    color: #5dade2;
+}
+
+.help-sections section {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.dark-mode .help-sections section {
+    background-color: #444;
+}
+
+.help-sections h3 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.dark-mode .help-sections h3 {
+    color: #ecf0f1;
+    border-bottom: 2px solid #5dade2;
+}
+
+.help-sections ul {
+    padding-left: 20px;
+}
