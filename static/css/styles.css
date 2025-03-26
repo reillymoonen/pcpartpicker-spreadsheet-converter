@@ -400,6 +400,14 @@ td {
     cursor: grabbing;
 }
 
+.help-model {
+    overflow: hidden !important;
+}
+
+.body {
+    overflow: hidden;
+}
+
 /* Help Button */
 .help-button {
     position: fixed;
@@ -433,8 +441,8 @@ td {
     background-color: #3498db;
 }
 
-/* Help Modal */
-.help-modal {
+/* Help model */
+.help-model {
     display: none;
     position: fixed;
     z-index: 2000;
@@ -444,9 +452,10 @@ td {
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
 }
 
-.help-modal-content {
+.help-model-content {
     background-color: #fefefe;
     margin: 10% auto;
     padding: 20px;
@@ -458,7 +467,7 @@ td {
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
-.dark-mode .help-modal-content {
+.dark-mode .help-model-content {
     background-color: #333;
     color: white;
 }

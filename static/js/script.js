@@ -362,21 +362,26 @@ document.querySelector('.dark-mode-toggle').addEventListener('click', function()
     localStorage.setItem('darkMode', darkMode);
 });
 
-// Help Button and Modal Functionality
-document.getElementById('helpButton').addEventListener('click', function() {
-    const helpModal = document.getElementById('helpModal');
-    helpModal.style.display = 'block';
+// Open Help model
+document.querySelector('.help-button').addEventListener('click', function() {
+    const helpmodel = document.querySelector('.help-model');
+    helpmodel.style.display = 'block';
+    document.body.classList.add('body'); // Disable scrolling
 });
 
+// Close Help model
 document.querySelector('.help-close').addEventListener('click', function() {
-    const helpModal = document.getElementById('helpModal');
-    helpModal.style.display = 'none';
+    const helpmodel = document.querySelector('.help-model');
+    helpmodel.style.display = 'none';
+    document.body.classList.remove('body'); // Enable scrolling
 });
 
-// Close modal if user clicks outside of it
+
+// Close model if user clicks outside of it
 window.addEventListener('click', function(event) {
-    const helpModal = document.getElementById('helpModal');
-    if (event.target === helpModal) {
-        helpModal.style.display = 'none';
+    const helpmodel = document.getElementById('helpmodel');
+    if (event.target === helpmodel) {
+        helpmodel.style.display = 'none';
     }
 });
+
