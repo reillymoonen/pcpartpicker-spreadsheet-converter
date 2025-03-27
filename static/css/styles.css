@@ -401,48 +401,6 @@ td {
 }
 
 .help-model {
-    overflow: hidden !important;
-}
-
-.body {
-    overflow: hidden;
-}
-
-/* Help Button */
-.help-button {
-    position: fixed;
-    bottom: 18px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: #3498db;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    z-index: 1000;
-}
-
-.help-button:hover {
-    transform: scale(1.1);
-    background-color: #2980b9;
-}
-
-.dark-mode .help-button {
-    background-color: #5dade2;
-    color: white;
-}
-
-.dark-mode .help-button:hover {
-    background-color: #3498db;
-}
-
-/* Help model */
-.help-model {
     display: none;
     position: fixed;
     z-index: 2000;
@@ -453,18 +411,35 @@ td {
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
     backdrop-filter: blur(5px);
+
+    /* New styles for better mobile responsiveness */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Add padding to prevent content from touching screen edges */
+    box-sizing: border-box;
 }
 
 .help-model-content {
     background-color: #fefefe;
-    margin: 10% auto;
+    margin: 0; /* Remove margin */
     padding: 20px;
     border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
+    width: 100%; /* Full width */
+    max-width: 600px; /* Maintain max-width */
     max-height: 70vh;
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    position: relative; /* Ensure proper positioning */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .help-model-content {
+        width: 90%; /* Slightly less width on smaller screens */
+        margin: 0 auto; /* Center the content */
+        max-height: 80vh; /* Slightly more height on mobile */
+    }
 }
 
 .dark-mode .help-model-content {
@@ -516,4 +491,45 @@ td {
 
 .help-sections ul {
     padding-left: 20px;
+}
+
+.help-model {
+    overflow: hidden !important;
+}
+
+.body {
+    overflow: hidden;
+}
+
+/* Help Button */
+.help-button {
+    position: fixed;
+    bottom: 18px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    z-index: 1000;
+}
+
+.help-button:hover {
+    transform: scale(1.1);
+    background-color: #2980b9;
+}
+
+.dark-mode .help-button {
+    background-color: #5dade2;
+    color: white;
+}
+
+.dark-mode .help-button:hover {
+    background-color: #3498db;
 }
