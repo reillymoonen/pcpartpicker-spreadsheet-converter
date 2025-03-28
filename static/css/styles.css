@@ -401,7 +401,7 @@ td {
 }
 
 .help-model {
-    display: none;
+    display: none !important; /* Ensure it's always hidden by default */
     position: fixed;
     z-index: 2000;
     left: 0;
@@ -412,12 +412,21 @@ td {
     background-color: rgba(0,0,0,0.4);
     backdrop-filter: blur(5px);
 
-    /* New styles for better mobile responsiveness */
-    display: flex;
+    /* Ensure it covers the entire viewport */
+    position: fixed;
+    display: flex !important;
     justify-content: center;
     align-items: center;
-    padding: 20px; /* Add padding to prevent content from touching screen edges */
+    opacity: 0; /* Start fully transparent */
+    pointer-events: none; /* Prevent interactions when hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+    padding: 20px;
     box-sizing: border-box;
+}
+
+.help-model.show {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .help-model-content {

@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Ensure help window is closed by default
+    const helpModel = document.querySelector('.help-model');
+    helpModel.style.display = 'none';
+
     // Add delegation for sort buttons
     document.querySelector('thead').addEventListener('click', function(e) {
         if (e.target.classList.contains('sort-btn')) {
@@ -32,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('pasteButton').addEventListener('click', async () => {
     try {
         const text = await navigator.clipboard.readText(); // Get text from clipboard
-        // document.getElementById('pasteTarget').textContent = text; // Display the text
         document.getElementById('url').value = text; // If using an input or textarea
     } catch (err) {
         console.error('Failed to read clipboard contents: ', err);
@@ -334,54 +337,94 @@ function updateSortButtons() {
     });
 }
 
-// Dark mode toggle
-document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
-    darkMode = !darkMode;
-    document.body.classList.toggle('dark-mode');
-    this.classList.toggle('dark');
+// Check for saved dark mode preference on page load and set up event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize dark mode from localStorage
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        toggleDarkMode(true);
+    }
 
-    // Toggle dark mode on specific Bootstrap elements
+    // Set up dark mode toggle button
+    document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+        darkMode = !darkMode;
+        localStorage.setItem('darkMode', darkMode);
+        toggleDarkMode(darkMode);
+    });
+
+    // Rest of your initialization code...
+    const helpModel = document.querySelector('.help-model');
+    helpModel.style.display = 'none';
+
+    // Add delegation for sort buttons
+    document.querySelector('thead').addEventListener('click', function(e) {
+        if (e.target.classList.contains('sort-btn')) {
+            sortTable(e.target.dataset.sort);
+        }
+    });
+});
+
+// Function to toggle dark mode
+function toggleDarkMode(enable) {
+    darkMode = enable;
+    document.body.classList.toggle('dark-mode', enable);
+    document.querySelector('.dark-mode-toggle').classList.toggle('dark', enable);
+
+    // Apply dark mode to Bootstrap elements
     const lightElements = document.querySelectorAll('.bg-light');
-    const darkElements = document.querySelectorAll('.bg-dark');
-
-    if (darkMode) {
-        lightElements.forEach(el => {
+    lightElements.forEach(el => {
+        if (enable) {
             el.classList.remove('bg-light');
             el.classList.add('bg-dark');
             el.classList.add('text-white');
-        });
-    } else {
-        darkElements.forEach(el => {
+        } else {
             el.classList.remove('bg-dark');
             el.classList.remove('text-white');
             el.classList.add('bg-light');
-        });
-    }
+        }
+    });
+}
 
-    // Save dark mode preference in localStorage
-    localStorage.setItem('darkMode', darkMode);
-});
+    // Ensure help window is completely hidden on load
+    const helpModel = document.querySelector('.help-model');
+    helpModel.style.display = 'none';
+    helpModel.classList.remove('show');
 
-// Open Help model
+    // Add delegation for sort buttons
+    document.querySelector('thead').addEventListener('click', function(e) {
+        if (e.target.classList.contains('sort-btn')) {
+            sortTable(e.target.dataset.sort);
+        }
+    });
+
+// Modify existing help model open/close functions
 document.querySelector('.help-button').addEventListener('click', function() {
-    const helpmodel = document.querySelector('.help-model');
-    helpmodel.style.display = 'block';
+    const helpModel = document.querySelector('.help-model');
+    helpModel.style.display = 'flex';
+    // Use a small timeout to ensure display is set before adding show class
+    setTimeout(() => {
+        helpModel.classList.add('show');
+    }, 10);
     document.body.classList.add('body'); // Disable scrolling
 });
 
-// Close Help model
 document.querySelector('.help-close').addEventListener('click', function() {
-    const helpmodel = document.querySelector('.help-model');
-    helpmodel.style.display = 'none';
+    const helpModel = document.querySelector('.help-model');
+    helpModel.classList.remove('show');
+    // Wait for transition before hiding
+    setTimeout(() => {
+        helpModel.style.display = 'none';
+    }, 300);
     document.body.classList.remove('body'); // Enable scrolling
 });
 
-
 // Close model if user clicks outside of it
 window.addEventListener('click', function(event) {
-    const helpmodel = document.getElementById('helpmodel');
-    if (event.target === helpmodel) {
-        helpmodel.style.display = 'none';
+    const helpModel = document.querySelector('.help-model');
+    if (event.target === helpModel) {
+        helpModel.classList.remove('show');
+        setTimeout(() => {
+            helpModel.style.display = 'none';
+        }, 300);
     }
 });
-
