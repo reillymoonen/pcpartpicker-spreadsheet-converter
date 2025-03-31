@@ -4,26 +4,48 @@ let dragSrcIndex = null;
 let sortColumn = null;
 let sortDirection = 'asc';
 
-// Check for saved dark mode preference on page load
-document.addEventListener('DOMContentLoaded', function() {
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (savedDarkMode) {
-        darkMode = true;
-        document.body.classList.add('dark-mode');
-        document.querySelector('.dark-mode-toggle').classList.add('dark');
+// Function to toggle dark mode
+function toggleDarkMode(enable) {
+    darkMode = enable;
+    document.body.classList.toggle('dark-mode', enable);
+    document.querySelector('.dark-mode-toggle').classList.toggle('dark', enable);
 
-        // Apply dark mode to Bootstrap elements
-        const lightElements = document.querySelectorAll('.bg-light');
-        lightElements.forEach(el => {
+    // Handle all form elements and containers with background colors
+    const formElements = document.querySelectorAll('.bg-light, .bg-dark');
+    formElements.forEach(el => {
+        if (enable) {
+            // Switch to dark mode
             el.classList.remove('bg-light');
             el.classList.add('bg-dark');
             el.classList.add('text-white');
-        });
+        } else {
+            // Switch to light mode
+            el.classList.remove('bg-dark');
+            el.classList.remove('text-white');
+            el.classList.add('bg-light');
+        }
+    });
+}
+
+// Check for saved dark mode preference on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize dark mode from localStorage
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        toggleDarkMode(true);
     }
 
-    // Ensure help window is closed by default
+    // Set up dark mode toggle button
+    document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+        darkMode = !darkMode;
+        localStorage.setItem('darkMode', darkMode);
+        toggleDarkMode(darkMode);
+    });
+
+    // Ensure help window is completely hidden on load
     const helpModel = document.querySelector('.help-model');
     helpModel.style.display = 'none';
+    helpModel.classList.remove('show');
 
     // Add delegation for sort buttons
     document.querySelector('thead').addEventListener('click', function(e) {
@@ -192,12 +214,12 @@ function displayData(data) {
 
         // Apply dark mode to newly created elements if needed
         if (darkMode) {
-            const lightElements = document.querySelectorAll('.bg-light');
-            lightElements.forEach(el => {
-                el.classList.remove('bg-light');
-                el.classList.add('bg-dark');
-                el.classList.add('text-white');
-            });
+            const downloadSection = document.getElementById('downloadSection');
+            if (downloadSection) {
+                downloadSection.classList.remove('bg-light');
+                downloadSection.classList.add('bg-dark');
+                downloadSection.classList.add('text-white');
+            }
         }
 
         // Update sort button indicators if sorting was previously applied
@@ -337,94 +359,37 @@ function updateSortButtons() {
     });
 }
 
-// Check for saved dark mode preference on page load and set up event listeners
+// Help modal open/close functions
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize dark mode from localStorage
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (savedDarkMode) {
-        toggleDarkMode(true);
-    }
-
-    // Set up dark mode toggle button
-    document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
-        darkMode = !darkMode;
-        localStorage.setItem('darkMode', darkMode);
-        toggleDarkMode(darkMode);
+    document.querySelector('.help-button').addEventListener('click', function() {
+        const helpModel = document.querySelector('.help-model');
+        helpModel.style.display = 'flex';
+        // Use a small timeout to ensure display is set before adding show class
+        setTimeout(() => {
+            helpModel.classList.add('show');
+        }, 10);
+        document.body.classList.add('body'); // Disable scrolling
     });
 
-    // Rest of your initialization code...
-    const helpModel = document.querySelector('.help-model');
-    helpModel.style.display = 'none';
-
-    // Add delegation for sort buttons
-    document.querySelector('thead').addEventListener('click', function(e) {
-        if (e.target.classList.contains('sort-btn')) {
-            sortTable(e.target.dataset.sort);
-        }
-    });
-});
-
-// Function to toggle dark mode
-function toggleDarkMode(enable) {
-    darkMode = enable;
-    document.body.classList.toggle('dark-mode', enable);
-    document.querySelector('.dark-mode-toggle').classList.toggle('dark', enable);
-
-    // Apply dark mode to Bootstrap elements
-    const lightElements = document.querySelectorAll('.bg-light');
-    lightElements.forEach(el => {
-        if (enable) {
-            el.classList.remove('bg-light');
-            el.classList.add('bg-dark');
-            el.classList.add('text-white');
-        } else {
-            el.classList.remove('bg-dark');
-            el.classList.remove('text-white');
-            el.classList.add('bg-light');
-        }
-    });
-}
-
-    // Ensure help window is completely hidden on load
-    const helpModel = document.querySelector('.help-model');
-    helpModel.style.display = 'none';
-    helpModel.classList.remove('show');
-
-    // Add delegation for sort buttons
-    document.querySelector('thead').addEventListener('click', function(e) {
-        if (e.target.classList.contains('sort-btn')) {
-            sortTable(e.target.dataset.sort);
-        }
-    });
-
-// Modify existing help model open/close functions
-document.querySelector('.help-button').addEventListener('click', function() {
-    const helpModel = document.querySelector('.help-model');
-    helpModel.style.display = 'flex';
-    // Use a small timeout to ensure display is set before adding show class
-    setTimeout(() => {
-        helpModel.classList.add('show');
-    }, 10);
-    document.body.classList.add('body'); // Disable scrolling
-});
-
-document.querySelector('.help-close').addEventListener('click', function() {
-    const helpModel = document.querySelector('.help-model');
-    helpModel.classList.remove('show');
-    // Wait for transition before hiding
-    setTimeout(() => {
-        helpModel.style.display = 'none';
-    }, 300);
-    document.body.classList.remove('body'); // Enable scrolling
-});
-
-// Close model if user clicks outside of it
-window.addEventListener('click', function(event) {
-    const helpModel = document.querySelector('.help-model');
-    if (event.target === helpModel) {
+    document.querySelector('.help-close').addEventListener('click', function() {
+        const helpModel = document.querySelector('.help-model');
         helpModel.classList.remove('show');
+        // Wait for transition before hiding
         setTimeout(() => {
             helpModel.style.display = 'none';
         }, 300);
-    }
+        document.body.classList.remove('body'); // Enable scrolling
+    });
+
+    // Close model if user clicks outside of it
+    window.addEventListener('click', function(event) {
+        const helpModel = document.querySelector('.help-model');
+        if (event.target === helpModel) {
+            helpModel.classList.remove('show');
+            setTimeout(() => {
+                helpModel.style.display = 'none';
+            }, 300);
+            document.body.classList.remove('body'); // Enable scrolling
+        }
+    });
 });
