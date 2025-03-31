@@ -429,6 +429,20 @@ td {
     pointer-events: auto;
 }
 
+/* Help section image styling */
+.help-sections img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .help-sections img {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
 .help-model-content {
     background-color: #fefefe;
     margin: 0; /* Remove margin */
