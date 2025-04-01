@@ -12,6 +12,5 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.13 (pcpartpicker-spreadsheet-converter)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Python 3.9 (pcpartpicker-spreadsheet-converter) interpreter library" level="application" />
   </component>
 </module>

@@ -474,8 +474,8 @@ td {
     padding: 20px;
     border-radius: 10px;
     width: 100%; /* Full width */
-    max-width: 600px; /* Maintain max-width */
-    max-height: 70vh;
+    max-width: 800px; /* Maintain max-width */
+    max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     position: relative; /* Ensure proper positioning */
