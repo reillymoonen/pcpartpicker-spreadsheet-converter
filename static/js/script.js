@@ -265,6 +265,10 @@ function handleDrop(e) {
     const movedItem = currentData.splice(dragSrcIndex, 1)[0];
     currentData.splice(dragTargetIndex, 0, movedItem);
 
+    // Reset sorting state
+    sortColumn = null;
+    sortDirection = 'asc';
+
     // Update the display
     displayData(currentData);
 
@@ -393,3 +397,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Add click event to help images for fullscreen view
+document.addEventListener('DOMContentLoaded', function() {
+    // This needs to be delegated since images are loaded dynamically
+    document.querySelector('.help-model').addEventListener('click', function(e) {
+        if (e.target.tagName === 'IMG' && e.target.closest('.help-sections')) {
+            openFullscreenImage(e.target.src);
+        }
+    });
+});
+
+function openFullscreenImage(src) {
+    const fullscreenDiv = document.createElement('div');
+    fullscreenDiv.className = 'fullscreen-image';
+
+    const fullscreenImg = document.createElement('img');
+    fullscreenImg.src = src;
+
+    fullscreenDiv.appendChild(fullscreenImg);
+    document.body.appendChild(fullscreenDiv);
+
+    fullscreenDiv.addEventListener('click', function() {
+        document.body.removeChild(fullscreenDiv);
+    });
+
+    // Also close on ESC key
+    document.addEventListener('keydown', function closeOnEsc(e) {
+        if (e.key === 'Escape') {
+            document.body.removeChild(fullscreenDiv);
+            document.removeEventListener('keydown', closeOnEsc);
+        }
+    });
+}

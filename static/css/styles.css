@@ -182,7 +182,7 @@ th {
 /* Sort button styles */
 .sort-btn {
     background: none !important;
-    color: inherit !important;
+    color: inherit !important; /* Explicitly inherit text color */
     font-size: 14px;
     cursor: pointer;
     padding: 0 0 0 5px !important;
@@ -193,18 +193,23 @@ th {
 
 .sort-btn:hover {
     transform: scale(1.2);
-    color: #3498db !important;
+    color: inherit !important; /* Force no color change on hover */
+    background: none !important; /* Ensure no background appears */
 }
 
 .sort-btn.active-sort {
-    color: #3498db !important;
     transform: scale(1.2);
+    color: inherit !important; /* Or use your preferred active color */
 }
 
+/* Dark mode overrides */
+.dark-mode .sort-btn,
 .dark-mode .sort-btn:hover,
 .dark-mode .sort-btn.active-sort {
-    color: #5dade2 !important;
+    color: inherit !important;
+    background: none !important;
 }
+
 
 /* Number column styling */
 .number-column {
@@ -488,6 +493,46 @@ td {
 .dark-mode .help-model-content {
     background-color: #333;
     color: white;
+}
+
+/* Fullscreen image styles */
+.fullscreen-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    cursor: zoom-out;
+}
+
+.fullscreen-image img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.dark-mode .fullscreen-image {
+    background-color: rgba(20, 20, 20, 0);
+    backdrop-filter: blur(5px);
+}
+
+.help-sections img {
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+
+.help-sections img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .help-sections img:hover {
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
 }
 
 /* Replace the existing .help-close styles with these */
