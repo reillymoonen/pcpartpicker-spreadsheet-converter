@@ -120,6 +120,26 @@ body {
     margin: 0;
 }
 
+/* Add this to your existing styles.css */
+.help-sections a {
+    color: #2c3e50; /* Same as footer links in light mode */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.help-sections a:hover {
+    color: #3498db; /* Same hover color as footer links */
+    text-decoration: underline;
+}
+
+.dark-mode .help-sections a {
+    color: #35dbf3; /* Same as footer links in dark mode */
+}
+
+.dark-mode .help-sections a:hover {
+    color: #5dade2; /* Same hover color as footer links in dark mode */
+}
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -470,24 +490,45 @@ td {
     color: white;
 }
 
+/* Replace the existing .help-close styles with these */
 .help-close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    color: #777;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 24px;
+    font-weight: 300;
+    border: none;
+    z-index: 1;
 }
 
 .help-close:hover {
-    color: #3498db;
+    transform: scale(1.1);
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
 }
 
 .dark-mode .help-close {
-    color: #ddd;
+    color: #bbb;
 }
 
 .dark-mode .help-close:hover {
-    color: #5dade2;
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+/* Add this to ensure the close button stays on top of content */
+.help-model-content {
+    position: relative;
 }
 
 .help-sections section {
