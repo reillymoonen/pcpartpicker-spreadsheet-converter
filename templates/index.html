@@ -4,92 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Part Picker Scraper</title>
-    <link rel="icon" type="text/x-icon" href="../static/img/icon.svg"> <!-- https://www.flaticon.com/authors/yogi-aprelliyanto -->
+    <link rel="icon" type="image/svg+xml" href="../static/img/icon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../static/css/styles.css" rel="stylesheet">
 </head>
 <body class="gradient-background">
-<div class="dark-mode-toggle" id="darkModeToggle">
+<div class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode" role="button" tabindex="0" aria-pressed="false">
     <span></span>
 </div>
 
 <div class="container">
-    <h1>PCPartPicker to Spreadsheet Converter</h1>
-    <h5.8 class="subheading">Enter a PCPartPicker list URL to extract your selected components and download them as a spreadsheet for easy organization and sharing.</h5.8>
+    <h1 id="main-heading">PCPartPicker to Spreadsheet Converter</h1>
+    <div class="subheading" aria-describedby="main-heading">
+        Enter a PCPartPicker list URL to extract your selected components and download them as a spreadsheet for easy organization and sharing.
+    </div>
     <br>
 
-    <form id="scraperForm" class="p-4 shadow-sm rounded bg-light">
+    <form id="scraperForm" class="p-4 shadow-sm rounded bg-light" aria-label="PC Part Picker URL submission form">
         <div class="mb-3">
             <label for="url" class="form-label">Enter Permalink:</label>
             <div class="input-with-button">
-                <input type="text" id="url" name="url" class="form-control" placeholder="https://pcpartpicker.com/list/..." required>
-                <button type="button" id="pasteButton" class="secondary-button">Paste</button>
+                <input type="text" id="url" name="url" class="form-control"
+                       placeholder="https://pcpartpicker.com/list/..." required
+                       aria-label="Paste your PC Part Picker list URL here"
+                       aria-required="true">
+                <button type="button" id="pasteButton" class="secondary-button"
+                        aria-label="Paste from clipboard">Paste</button>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Fetch Parts</button>
+        <button type="submit" class="btn btn-primary w-100"
+                aria-label="Fetch parts from the provided URL">Fetch Parts</button>
     </form>
 
-    <div id="loading">
-        <div class="spinner"></div>
+    <div id="loading" aria-live="polite" aria-busy="true" hidden>
+        <div class="spinner" aria-hidden="true"></div>
         <p>Loading...</p>
     </div>
 
     <div class="table-container">
-        <table id="partsTable" style="display: none;">
+        <table id="partsTable" aria-label="List of PC parts" hidden>
             <thead>
             <tr>
-                <th class="number-column"></th>
-                <th>Component <button class="sort-btn" data-sort="component">↕</button></th>
-                <th>Name <button class="sort-btn" data-sort="name">↕</button></th>
-                <th>Price <button class="sort-btn" data-sort="price">↕</button></th>
-                <th></th>
+                <th class="number-column" scope="col" aria-sort="none">#</th>
+                <th scope="col" aria-sort="none">Component <button class="sort-btn" data-sort="component" aria-label="Sort by component">↕</button></th>
+                <th scope="col" aria-sort="none">Name <button class="sort-btn" data-sort="name" aria-label="Sort by name">↕</button></th>
+                <th scope="col" aria-sort="none">Price <button class="sort-btn" data-sort="price" aria-label="Sort by price">↕</button></th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody></tbody>
         </table>
     </div>
 
-    <div id="downloadSection" class="mt-4 p-4 shadow-sm rounded bg-light">
+    <div id="downloadSection" class="mt-4 p-4 shadow-sm rounded bg-light" aria-label="Download options" hidden>
         <div class="mb-3">
             <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
             <div class="input-with-button">
-                <input type="text" id="filename" name="filename" placeholder="optional" class="form-control" required>
-                <button type="button" id="datetimeButton" class="secondary-button">Use Date/Time</button>
+                <input type="text" id="filename" name="filename" placeholder="optional" class="form-control"
+                       aria-label="Enter filename for download">
+                <button type="button" id="datetimeButton" class="secondary-button"
+                        aria-label="Use current date and time as filename">Use Date/Time</button>
             </div>
         </div>
-        <button type="button" id="downloadButton">Download CSV</button>
+        <button type="button" id="downloadButton" aria-label="Download parts list as CSV">Download CSV</button>
     </div>
 </div>
 
-<div id="helpmodel" class="help-model">
+<div id="helpModel" class="help-model" role="dialog" aria-modal="true" aria-labelledby="helpModelTitle" hidden>
     <div class="help-model-content">
-        <span class="help-close">&times;</span>
+        <button type="button" class="help-close" aria-label="Close help dialog">&times;</button>
+        <h2 id="helpModelTitle">Help Guide</h2>
         <div class="help-sections">
-            <section>
-                <h3>1. Finding Your PCPartPicker List URL</h3>
-                <p>Go to <a href="https://pcpartpicker.com/" target="_blank">PCPartPicker</a> and create or open your parts list.
+            <section aria-labelledby="section1-heading">
+                <h3 id="section1-heading">1. Finding Your PCPartPicker List URL</h3>
+                <p>Go to <a href="https://pcpartpicker.com/" target="_blank" rel="noopener noreferrer">PCPartPicker</a> and create or open your parts list.
                     Click the copy button to copy the shareable URL. Note: the part list will need to be public</p>
-                <img src="../static/img/help_copy_link.jpg" alt="copy example" class="help-image">
+                <img src="../static/img/help_copy_link.jpg" alt="Copy link example showing the copy button on PCPartPicker" class="help-image">
             </section>
-            <section>
-                <h3>2. Paste the URL</h3>
+            <section aria-labelledby="section2-heading">
+                <h3 id="section2-heading">2. Paste the URL</h3>
                 <p>Paste the copied URL into the input field on this page. You can use the "Paste" button for quick access.</p>
             </section>
-            <section>
-                <h3>3. Fetch Parts</h3>
+            <section aria-labelledby="section3-heading">
+                <h3 id="section3-heading">3. Fetch Parts</h3>
                 <p>Click "Fetch Parts" to retrieve your component list. The parts will be displayed in a table.</p>
             </section>
-            <section>
-                <h3>4. Customize Your List</h3>
+            <section aria-labelledby="section4-heading">
+                <h3 id="section4-heading">4. Customize Your List</h3>
                 <ul>
                     <li>Sort columns by clicking the ↕ buttons</li>
                     <li>Drag and drop rows to reorder</li>
                     <li>Delete rows using the × button</li>
                 </ul>
             </section>
-            <section>
-                <h3>5. Download</h3>
+            <section aria-labelledby="section5-heading">
+                <h3 id="section5-heading">5. Download</h3>
                 <p>Name your file (optional) or click "Use Date/Time" to use the current date and time and click
                     "Download CSV" to save your parts list. If left blank the file will be called "parts_list"</p>
             </section>
@@ -97,13 +107,13 @@
     </div>
 </div>
 
-<div id="helpButton" class="help-button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<button id="helpButton" class="help-button" aria-label="Open help guide" aria-expanded="false" aria-controls="helpModel">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="10"></circle>
         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
         <line x1="12" y1="17" x2="12.01" y2="17"></line>
     </svg>
-</div>
+</button>
 
 <div class="footer">
     <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
@@ -111,9 +121,9 @@
         <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/reillymoonen">Reilly Moonen</a> is licensed under
         <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
             CC BY-SA 4.0
-            <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="">
-            <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="">
-            <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt="">
+            <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="Creative Commons logo">
+            <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="Attribution logo">
+            <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt="Share Alike logo">
         </a>
     </p>
 </div>
