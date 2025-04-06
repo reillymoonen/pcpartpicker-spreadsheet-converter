@@ -8,18 +8,18 @@ let sortDirection = 'asc';
 function toggleDarkMode(enable) {
     darkMode = enable;
     document.body.classList.toggle('dark-mode', enable);
-    const toggleButton = document.querySelector('.dark-mode-toggle');
-    toggleButton.classList.toggle('dark', enable);
-    toggleButton.setAttribute('aria-pressed', enable);
+    document.querySelector('.dark-mode-toggle').classList.toggle('dark', enable);
 
     // Handle all form elements and containers with background colors
     const formElements = document.querySelectorAll('.bg-light, .bg-dark');
     formElements.forEach(el => {
         if (enable) {
+            // Switch to dark mode
             el.classList.remove('bg-light');
             el.classList.add('bg-dark');
             el.classList.add('text-white');
         } else {
+            // Switch to light mode
             el.classList.remove('bg-dark');
             el.classList.remove('text-white');
             el.classList.add('bg-light');
@@ -36,28 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Set up dark mode toggle button
-    const darkModeToggle = document.querySelector('.dark-mode-toggle');
-    darkModeToggle.addEventListener('click', function() {
+    document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
         darkMode = !darkMode;
         localStorage.setItem('darkMode', darkMode);
         toggleDarkMode(darkMode);
     });
 
-    // Add keyboard support for dark mode toggle
-    darkModeToggle.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            darkMode = !darkMode;
-            localStorage.setItem('darkMode', darkMode);
-            toggleDarkMode(darkMode);
-        }
-    });
-
-    // Initialize elements with proper ARIA states
-    document.getElementById('loading').setAttribute('hidden', 'true');
-    document.getElementById('partsTable').setAttribute('hidden', 'true');
-    document.getElementById('downloadSection').setAttribute('hidden', 'true');
-    document.getElementById('helpModel').setAttribute('hidden', 'true');
+    // Ensure help window is completely hidden on load
+    const helpModel = document.querySelector('.help-model');
+    helpModel.style.display = 'none';
+    helpModel.classList.remove('show');
 
     // Add delegation for sort buttons
     document.querySelector('thead').addEventListener('click', function(e) {
@@ -69,12 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.getElementById('pasteButton').addEventListener('click', async () => {
     try {
-        const text = await navigator.clipboard.readText();
-        document.getElementById('url').value = text;
-        document.getElementById('url').focus();
+        const text = await navigator.clipboard.readText(); // Get text from clipboard
+        document.getElementById('url').value = text; // If using an input or textarea
     } catch (err) {
         console.error('Failed to read clipboard contents: ', err);
-        alert('Clipboard access denied. Please paste manually.');
     }
 });
 
@@ -86,10 +72,9 @@ document.getElementById('scraperForm').addEventListener('submit', async function
     const downloadSection = document.getElementById('downloadSection');
     const table = document.getElementById('partsTable');
 
-    loading.removeAttribute('hidden');
-    loading.setAttribute('aria-busy', 'true');
-    downloadSection.setAttribute('hidden', 'true');
-    table.setAttribute('hidden', 'true');
+    loading.style.display = 'block';
+    downloadSection.style.display = 'none';
+    table.style.display = 'none';
 
     try {
         const response = await fetch('/fetch_parts', {
@@ -114,8 +99,7 @@ document.getElementById('scraperForm').addEventListener('submit', async function
         alert('An error occurred. Please try again.');
         console.error('Error:', error);
     } finally {
-        loading.setAttribute('hidden', 'true');
-        loading.setAttribute('aria-busy', 'false');
+        loading.style.display = 'none';
     }
 });
 
@@ -124,7 +108,6 @@ document.getElementById('datetimeButton').addEventListener('click', function() {
     const now = new Date();
     const timestamp = `pcparts_${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
     document.getElementById('filename').value = timestamp;
-    document.getElementById('filename').focus();
 });
 
 // Download button handler
@@ -147,7 +130,6 @@ document.getElementById('downloadButton').addEventListener('click', async functi
             const a = document.createElement('a');
             a.href = url;
             a.download = `${filename}.csv`;
-            a.setAttribute('aria-label', 'Download CSV file');
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -188,18 +170,17 @@ function displayData(data) {
 
     if (data.length === 0) {
         // Hide table and download section if no data
-        table.setAttribute('hidden', 'true');
-        downloadSection.setAttribute('hidden', 'true');
+        table.style.display = 'none';
+        downloadSection.style.display = 'none';
         document.getElementById('url').value = '';
     } else {
         // Show table and populate rows
-        table.removeAttribute('hidden');
+        table.style.display = 'table';
         data.forEach((part, index) => {
             const row = document.createElement('tr');
             row.setAttribute('draggable', 'true');
             row.dataset.index = index;
             row.classList.add('draggable-row');
-            row.setAttribute('aria-label', `${part.Component}: ${part.Name}, Price: ${part.Price}`);
 
             // Add drag event listeners
             row.addEventListener('dragstart', handleDragStart);
@@ -207,19 +188,13 @@ function displayData(data) {
             row.addEventListener('dragleave', handleDragLeave);
             row.addEventListener('drop', handleDrop);
             row.addEventListener('dragend', handleDragEnd);
-            row.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
 
             row.innerHTML = `
                 <td class="number-column">${index + 1}</td>
                 <td>${part.Component}</td>
                 <td>${part.Name}</td>
                 <td>${part.Price}</td>
-                <td><button class="delete-btn" onclick="deleteRow(${index})" aria-label="Delete ${part.Component}">×</button></td>
+                <td><button class="delete-btn" onclick="deleteRow(${index})">×</button></td>
             `;
             tbody.appendChild(row);
         });
@@ -227,7 +202,6 @@ function displayData(data) {
         // Add total row only once
         const totalRow = document.createElement('tr');
         totalRow.classList.add('total-row');
-        totalRow.setAttribute('aria-label', 'Total cost');
         totalRow.innerHTML = `
             <td colspan="3" style="text-align: right;">Total:</td>
             <td>${calculateTotal(data)}</td>
@@ -236,7 +210,7 @@ function displayData(data) {
         tbody.appendChild(totalRow);
 
         // Show download section
-        downloadSection.removeAttribute('hidden');
+        downloadSection.style.display = 'block';
 
         // Apply dark mode to newly created elements if needed
         if (darkMode) {
@@ -259,79 +233,72 @@ function handleDragStart(e) {
     dragSrcIndex = parseInt(this.dataset.index);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', dragSrcIndex);
-    this.setAttribute('aria-grabbed', 'true');
 }
 
 function handleDragOver(e) {
     if (e.preventDefault) {
-        e.preventDefault();
+        e.preventDefault(); // Necessary to allow drop
     }
     e.dataTransfer.dropEffect = 'move';
     this.classList.add('drag-over');
-    this.setAttribute('aria-dropeffect', 'move');
     return false;
 }
 
 function handleDragLeave(e) {
     this.classList.remove('drag-over');
-    this.removeAttribute('aria-dropeffect');
 }
 
 function handleDrop(e) {
     if (e.stopPropagation) {
-        e.stopPropagation();
+        e.stopPropagation(); // Stops some browsers from redirecting
     }
 
     this.classList.remove('drag-over');
-    this.removeAttribute('aria-dropeffect');
 
+    // Don't do anything if dropping on the same row
     const dragTargetIndex = parseInt(this.dataset.index);
     if (dragSrcIndex === dragTargetIndex) {
         return false;
     }
 
+    // Reorder the array
     const movedItem = currentData.splice(dragSrcIndex, 1)[0];
     currentData.splice(dragTargetIndex, 0, movedItem);
 
+    // Reset sorting state
     sortColumn = null;
     sortDirection = 'asc';
 
+    // Update the display
     displayData(currentData);
-
-    // Focus the moved row for keyboard users
-    const rows = document.querySelectorAll('.draggable-row');
-    if (rows[dragTargetIndex]) {
-        rows[dragTargetIndex].focus();
-    }
 
     return false;
 }
 
 function handleDragEnd(e) {
+    // Reset the opacity of all rows
     document.querySelectorAll('.draggable-row').forEach(row => {
         row.style.opacity = '1';
         row.classList.remove('drag-over');
-        row.removeAttribute('aria-grabbed');
-        row.removeAttribute('aria-dropeffect');
     });
 }
 
 // Delete row function
 function deleteRow(index) {
-    if (confirm('Are you sure you want to delete this item?')) {
-        currentData.splice(index, 1);
-        displayData(currentData);
-        if (currentData.length === 0) {
-            displayData([]);
-        }
+    currentData.splice(index, 1);
+    displayData(currentData);
+    if (currentData.length === 0) {
+        displayData([]);
     }
 }
 
 // Sort table function
 function sortTable(column) {
     if (sortColumn === column) {
+        // Toggle direction if clicking the same column
         sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
+        // Set new column and default to ascending
         sortColumn = column;
         sortDirection = 'asc';
     }
@@ -356,9 +323,11 @@ function sortTable(column) {
                 valueB.localeCompare(valueA);
         }
         else if (column === 'price') {
+            // Parse price values
             valueA = parsePriceValue(a.Price);
             valueB = parsePriceValue(b.Price);
 
+            // Handle N/A values
             if (isNaN(valueA)) valueA = sortDirection === 'asc' ? Infinity : -Infinity;
             if (isNaN(valueB)) valueB = sortDirection === 'asc' ? Infinity : -Infinity;
 
@@ -367,7 +336,10 @@ function sortTable(column) {
         return 0;
     });
 
+    // Update display after sorting
     displayData(currentData);
+
+    // Update sort button indicators
     updateSortButtons();
 }
 
@@ -381,92 +353,76 @@ function parsePriceValue(priceStr) {
 function updateSortButtons() {
     document.querySelectorAll('.sort-btn').forEach(btn => {
         const column = btn.dataset.sort;
-        const th = btn.closest('th');
         if (column === sortColumn) {
             btn.textContent = sortDirection === 'asc' ? '↑' : '↓';
             btn.classList.add('active-sort');
-            th.setAttribute('aria-sort', sortDirection);
         } else {
             btn.textContent = '↕';
             btn.classList.remove('active-sort');
-            th.setAttribute('aria-sort', 'none');
         }
     });
 }
 
 // Help modal open/close functions
 document.addEventListener('DOMContentLoaded', function() {
-    const helpButton = document.querySelector('.help-button');
-    const helpModel = document.querySelector('.help-model');
-
-    helpButton.addEventListener('click', function() {
-        helpModel.removeAttribute('hidden');
-        helpButton.setAttribute('aria-expanded', 'true');
+    document.querySelector('.help-button').addEventListener('click', function() {
+        const helpModel = document.querySelector('.help-model');
+        helpModel.style.display = 'flex';
+        // Use a small timeout to ensure display is set before adding show class
         setTimeout(() => {
             helpModel.classList.add('show');
-            document.querySelector('.help-model-content').focus();
         }, 10);
-        document.body.classList.add('body');
+        document.body.classList.add('body'); // Disable scrolling
     });
 
     document.querySelector('.help-close').addEventListener('click', function() {
-        closeHelpModel();
+        const helpModel = document.querySelector('.help-model');
+        helpModel.classList.remove('show');
+        // Wait for transition before hiding
+        setTimeout(() => {
+            helpModel.style.display = 'none';
+        }, 300);
+        document.body.classList.remove('body'); // Enable scrolling
     });
 
     // Close model if user clicks outside of it
     window.addEventListener('click', function(event) {
+        const helpModel = document.querySelector('.help-model');
         if (event.target === helpModel) {
-            closeHelpModel();
+            helpModel.classList.remove('show');
+            setTimeout(() => {
+                helpModel.style.display = 'none';
+            }, 300);
+            document.body.classList.remove('body'); // Enable scrolling
         }
     });
-
-    // Close on ESC key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && helpModel.classList.contains('show')) {
-            closeHelpModel();
-        }
-    });
-
-    function closeHelpModel() {
-        helpModel.classList.remove('show');
-        helpButton.setAttribute('aria-expanded', 'false');
-        setTimeout(() => {
-            helpModel.setAttribute('hidden', 'true');
-        }, 300);
-        document.body.classList.remove('body');
-        helpButton.focus();
-    }
 });
 
 // Add click event to help images for fullscreen view
 document.addEventListener('DOMContentLoaded', function() {
+    // This needs to be delegated since images are loaded dynamically
     document.querySelector('.help-model').addEventListener('click', function(e) {
         if (e.target.tagName === 'IMG' && e.target.closest('.help-sections')) {
-            openFullscreenImage(e.target.src, e.target.alt);
+            openFullscreenImage(e.target.src);
         }
     });
 });
 
-function openFullscreenImage(src, alt) {
+function openFullscreenImage(src) {
     const fullscreenDiv = document.createElement('div');
     fullscreenDiv.className = 'fullscreen-image';
-    fullscreenDiv.setAttribute('role', 'dialog');
-    fullscreenDiv.setAttribute('aria-label', 'Enlarged image view');
-    fullscreenDiv.setAttribute('aria-modal', 'true');
-    fullscreenDiv.tabIndex = -1;
 
     const fullscreenImg = document.createElement('img');
     fullscreenImg.src = src;
-    fullscreenImg.alt = alt;
 
     fullscreenDiv.appendChild(fullscreenImg);
     document.body.appendChild(fullscreenDiv);
-    fullscreenDiv.focus();
 
     fullscreenDiv.addEventListener('click', function() {
         document.body.removeChild(fullscreenDiv);
     });
 
+    // Also close on ESC key
     document.addEventListener('keydown', function closeOnEsc(e) {
         if (e.key === 'Escape') {
             document.body.removeChild(fullscreenDiv);
