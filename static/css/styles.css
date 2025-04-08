@@ -28,7 +28,35 @@ body.dark-mode {
     color: #fff;
 }
 
-.subheading {
+/* Add to styles.css */
+.link-column {
+    width: 50px;
+    text-align: center;
+}
+
+.link-button {
+    display: inline-block;
+    padding: 5px 8px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.link-button:hover {
+    background-color: #2980b9;
+}
+
+.dark-mode .link-button {
+    background-color: #5dade2;
+}
+
+.dark-mode .link-button:hover {
+    background-color: #3498db;
+}
+
+h5 {
     max-width: 700px;
     text-align: center;
     margin: 0 auto; /* Centers the block horizontally */
