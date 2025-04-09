@@ -214,6 +214,7 @@ function displayData(data) {
         totalRow.classList.add('total-row');
         totalRow.innerHTML = `
             <td colspan="3" style="text-align: right;">Total:</td>
+            <td></td>
             <td>${calculateTotal(data)}</td>
             <td></td>
         `;
