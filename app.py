@@ -40,7 +40,8 @@ def load_with_tqdm(total_steps):
 
 # Fetch parts from PCPartPicker
 def fetch_pcpartpicker_list(url):
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
     response = requests.get(url, headers=headers)
 
     if response.status_code != 200:
@@ -65,14 +66,24 @@ def fetch_pcpartpicker_list(url):
         name = name_wrapper.get_text(strip=True)
         price = clean_price(price_wrapper.get_text(strip=True))
 
-        
+        # Extract the link if it exists and isn't #view_custom_part
+        link = None
+        name_link = name_wrapper.find('a')
+        if name_link and name_link.get('href') != '#view_custom_part':
+            link = name_link.get('href')
+            if not link.startswith('http'):
+                link = f'https://pcpartpicker.com{link}'
+
         # Extract the price and remove any non-numeric characters except for the currency symbol
         price = price_wrapper.get_text(strip=True).replace('Price', '').strip()
-        
-        # Use regex to match the currency symbol and the number (e.g., $100, €200, etc.)
-        price = re.sub(r'[^0-9\.\,\-\$€£]', '', price)  # This removes anything other than digits, commas, periods, and some symbols
-      
-        parts.append({'Component': component, 'Name': name, 'Price': price})
+        price = re.sub(r'[^0-9\.\,\-\$€£]', '', price)
+
+        parts.append({
+            'Component': component,
+            'Name': name,
+            'Link': link or '',  # Empty string if no valid link
+            'Price': price
+        })
 
     return parts
 

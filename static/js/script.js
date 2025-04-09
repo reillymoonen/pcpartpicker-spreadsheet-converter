@@ -189,10 +189,16 @@ function displayData(data) {
             row.addEventListener('drop', handleDrop);
             row.addEventListener('dragend', handleDragEnd);
 
+            // Create link button if link exists
+            const linkButton = part.Link ?
+                `<a href="${part.Link}" target="_blank" class="link-button">🔗</a>` :
+                '';
+
             row.innerHTML = `
                 <td class="number-column">${index + 1}</td>
                 <td>${part.Component}</td>
                 <td>${part.Name}</td>
+                <td class="link-column">${linkButton}</td>
                 <td>${part.Price}</td>
                 <td><button class="delete-btn" onclick="deleteRow(${index})">×</button></td>
             `;
