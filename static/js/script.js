@@ -36,11 +36,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Set up dark mode toggle button
-    document.querySelector(".dark-mode-toggle").addEventListener("click", function() {
-        darkMode = !darkMode;
-        localStorage.setItem("darkMode", darkMode);
-        toggleDarkMode(darkMode);
-    });
+    document.querySelector(".dark-mode-toggle")
+        .addEventListener("click", function() {
+            darkMode = !darkMode;
+            localStorage.setItem("darkMode", darkMode);
+            toggleDarkMode(darkMode);
+        });
 
     // Ensure help window is completely hidden on load
     const helpModel = document.querySelector(".help-model");
@@ -57,91 +58,108 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.getElementById("pasteButton").addEventListener("click", async () => {
     try {
-        const text = await navigator.clipboard.readText(); // Get text from clipboard
-        document.getElementById("url").value = text; // If using an input or textarea
+        const text = await navigator.clipboard.readText();
+        document.getElementById("url").value = text;
     } catch (err) {
         console.error("Failed to read clipboard contents: ", err);
     }
 });
 
 // Form submission handler
-document.getElementById("scraperForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const url = document.getElementById("url").value;
-    const loading = document.getElementById("loading");
-    const downloadSection = document.getElementById("downloadSection");
-    const table = document.getElementById("partsTable");
+document.getElementById("scraperForm")
+    .addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const url = document.getElementById("url").value;
+        const loading = document.getElementById("loading");
+        const downloadSection = document.getElementById("downloadSection");
+        const table = document.getElementById("partsTable");
 
-    loading.style.display = "block";
-    downloadSection.style.display = "none";
-    table.style.display = "none";
+        loading.style.display = "block";
+        downloadSection.style.display = "none";
+        table.style.display = "none";
 
-    try {
-        const response = await fetch("/fetch_parts", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: `url=${encodeURIComponent(url)}`
-        });
-        const result = await response.json();
-        if (result.success) {
-            currentData = result.data;
-            displayData(result.data);
-        } else {
-            if (result.message.includes("Invalid URL")) {
-                alert("Invalid URL. Please enter a valid PCPartPicker list URL.");
+        try {
+            const response = await fetch("/fetch_parts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `url=${encodeURIComponent(url)}`
+            });
+            const result = await response.json();
+            if (result.success) {
+                currentData = result.data;
+                displayData(result.data);
             } else {
-                alert("Failed to fetch parts. Please try again.");
+                if (result.message.includes("Invalid URL")) {
+                    alert("Invalid URL. Please enter a valid PCPartPicker " +
+                          "list URL.");
+                } else {
+                    alert("Failed to fetch parts. Please try again.");
+                }
             }
+        } catch (error) {
+            alert("An error occurred. Please try again.");
+            console.error("Error:", error);
+        } finally {
+            loading.style.display = "none";
         }
-    } catch (error) {
-        alert("An error occurred. Please try again.");
-        console.error("Error:", error);
-    } finally {
-        loading.style.display = "none";
-    }
-});
+    });
 
 // Date/Time button handler
 document.getElementById("datetimeButton").addEventListener("click", function() {
     const now = new Date();
-    const timestamp = `pcparts_${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}_${String(now.getHours()).padStart(2, "0")}-${String(now.getMinutes()).padStart(2, "0")}-${String(now.getSeconds()).padStart(2, "0")}`;
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const timestamp = `pcparts_${year}-${month}-${day}_${hours}-${minutes}-` +
+                     `${seconds}`;
     document.getElementById("filename").value = timestamp;
 });
 
 // Download button handler
-document.getElementById("downloadButton").addEventListener("click", async function() {
-    if (!currentData) return;
-    const filename = document.getElementById("filename").value || "parts_list";
-    try {
-        const numberedData = currentData.map((part, index) => ({ Number: index + 1, ...part }));
-        const totalCost = calculateTotal(currentData);
-        numberedData.push({ Number: "", Component: "TOTAL", Name: "", Price: totalCost });
+document.getElementById("downloadButton")
+    .addEventListener("click", async function() {
+        if (!currentData) return;
+        const filename = document.getElementById("filename").value ||
+                        "parts_list";
+        try {
+            const numberedData = currentData.map((part, index) =>
+                ({ Number: index + 1, ...part }));
+            const totalCost = calculateTotal(currentData);
+            numberedData.push({
+                Number: "",
+                Component: "TOTAL",
+                Name: "",
+                Price: totalCost
+            });
 
-        const response = await fetch("/download_csv", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: numberedData, filename: filename })
-        });
-        if (response.ok) {
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `${filename}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.remove();
-        } else {
-            alert("Failed to download CSV. Please try again.");
+            const response = await fetch("/download_csv", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: numberedData, filename: filename })
+            });
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `${filename}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+            } else {
+                alert("Failed to download CSV. Please try again.");
+            }
+        } catch (error) {
+            alert("An error occurred while downloading. Please try again.");
+            console.error("Error:", error);
         }
-    } catch (error) {
-        alert("An error occurred while downloading. Please try again.");
-        console.error("Error:", error);
-    }
-});
+    });
 
 // Function to calculate total cost
 function calculateTotal(data) {
@@ -155,7 +173,9 @@ function calculateTotal(data) {
             }
         }
     });
-    const currencySymbol = data.length > 0 && data[0].Price && data[0].Price !== "N/A" ? data[0].Price.replace(/[0-9.-]+/g, "").trim() : "$";
+    const currencySymbol = data.length > 0 && data[0].Price &&
+                          data[0].Price !== "N/A" ?
+                          data[0].Price.replace(/[0-9.-]+/g, "").trim() : "$";
     return currencySymbol + total.toFixed(2);
 }
 
@@ -191,8 +211,11 @@ function displayData(data) {
 
             // Create link button if link exists
             const linkButton = part.Link ? `
-                <a href="${part.Link}" target="_blank" class="link-button" title="View product">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                <a href="${part.Link}" target="_blank" class="link-button"
+                   title="View product">
+                    <svg width="16" height="16" viewBox="0 0 24 24"
+                         fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                         fill-rule="evenodd" clip-rule="evenodd">
                         <path d="M14.851 11.923c-.179-.641-.521-1.246-1.025-1.749-1.562-1.562-4.095-1.563-5.657 0l-4.998 4.998c-1.562 1.563-1.563 4.095 0 5.657 1.562 1.563 4.096 1.561 5.656 0l3.842-3.841.333.009c.404 0 .802-.04 1.189-.117l-4.657 4.656c-.975.976-2.255 1.464-3.535 1.464-1.28 0-2.56-.488-3.535-1.464-1.952-1.951-1.952-5.12 0-7.071l4.998-4.998c.975-.976 2.256-1.464 3.536-1.464 1.279 0 2.56.488 3.535 1.464.493.493.861 1.063 1.105 1.672l-.787.784zm-5.703.147c.178.643.521 1.25 1.026 1.756 1.562 1.563 4.096 1.561 5.656 0l4.999-4.998c1.563-1.562 1.563-4.095 0-5.657-1.562-1.562-4.095-1.563-5.657 0l-3.841 3.841-.333-.009c-.404 0-.802.04-1.189.117l4.656-4.656c.975-.976 2.256-1.464 3.536-1.464 1.279 0 2.56.488 3.535 1.464 1.951 1.951 1.951 5.119 0 7.071l-4.999 4.998c-.975.976-2.255 1.464-3.535 1.464-1.28 0-2.56-.488-3.535-1.464-.494-.495-.863-1.067-1.107-1.678l.788-.785z"/>
                     </svg>
                 </a>
@@ -339,8 +362,10 @@ function sortTable(column) {
             valueB = parsePriceValue(b.Price);
 
             // Handle N/A values
-            if (isNaN(valueA)) valueA = sortDirection === "asc" ? Infinity : -Infinity;
-            if (isNaN(valueB)) valueB = sortDirection === "asc" ? Infinity : -Infinity;
+            if (isNaN(valueA)) valueA = sortDirection === "asc" ?
+                                        Infinity : -Infinity;
+            if (isNaN(valueB)) valueB = sortDirection === "asc" ?
+                                        Infinity : -Infinity;
 
             return sortDirection === "asc" ? valueA - valueB : valueB - valueA;
         }
@@ -413,7 +438,8 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function() {
     // This needs to be delegated since images are loaded dynamically
     document.querySelector(".help-model").addEventListener("click", function(e) {
-        if (e.target.tagName === "IMG" && e.target.closest(".help-sections")) {
+        if (e.target.tagName === "IMG" &&
+            e.target.closest(".help-sections")) {
             openFullscreenImage(e.target.src);
         }
     });
