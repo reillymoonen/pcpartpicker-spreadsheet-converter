@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Document head containing meta tags, title, and external resources -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,32 +10,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../static/css/styles.css" rel="stylesheet">
 </head>
+
 <body class="gradient-background">
+<!-- Dark mode toggle button - positioned absolutely in top corner -->
+<!-- Allows users to switch between light and dark themes -->
 <div class="dark-mode-toggle" id="darkModeToggle">
     <span></span>
-</div>
+</div> <!-- /dark-mode-toggle -->
 
+<!-- Main content container using Bootstrap's container class -->
+<!-- Centers content and provides responsive margins -->
 <div class="container">
+    <!-- Page header section with title and description -->
     <h1>PCPartPicker to Spreadsheet Converter</h1>
     <h5>Enter a PCPartPicker list URL to extract your selected components and download them as a spreadsheet for easy organization and sharing.</h5>
     <br>
 
+    <!-- URL input form section -->
+    <!-- Form for entering PCPartPicker list URLs with validation -->
     <form id="scraperForm" class="p-4 shadow-sm rounded bg-light">
         <div class="mb-3">
             <label for="url" class="form-label">Enter Permalink:</label>
             <div class="input-with-button">
                 <input type="text" id="url" name="url" class="form-control" placeholder="https://pcpartpicker.com/list/..." required>
                 <button type="button" id="pasteButton" class="secondary-button">Paste</button>
-            </div>
-        </div>
+            </div> <!-- /input-with-button -->
+        </div> <!-- /mb-3 -->
         <button type="submit" class="btn btn-primary w-100">Fetch Parts</button>
     </form>
 
+    <!-- Loading indicator section -->
+    <!-- Shows spinner animation while fetching data from PCPartPicker -->
     <div id="loading">
-        <div class="spinner"></div>
+        <div class="spinner"></div> <!-- /spinner -->
         <p>Loading...</p>
-    </div>
+    </div> <!-- /loading -->
 
+    <!-- Data table section -->
+    <!-- Displays scraped PC parts in a sortable, interactive table -->
     <div class="table-container">
         <table id="partsTable" style="display: none;">
             <thead>
@@ -49,20 +62,24 @@
             </thead>
             <tbody></tbody>
         </table>
-    </div>
+    </div> <!-- /table-container -->
 
+    <!-- Download options section -->
+    <!-- Allows users to customize filename and download CSV -->
     <div id="downloadSection" class="mt-4 p-4 shadow-sm rounded bg-light">
         <div class="mb-3">
             <label for="filename" class="form-label">Enter Filename (without .csv extension):</label>
             <div class="input-with-button">
                 <input type="text" id="filename" name="filename" placeholder="optional" class="form-control" required>
                 <button type="button" id="datetimeButton" class="secondary-button">Use Date/Time</button>
-            </div>
-        </div>
+            </div> <!-- /input-with-button -->
+        </div> <!-- /mb-3 -->
         <button type="button" id="downloadButton">Download CSV</button>
-    </div>
-</div>
+    </div> <!-- /downloadSection -->
+    </div> <!-- /container -->
 
+<!-- Help modal popup -->
+<!-- Contains step-by-step instructions for using the application -->
 <div id="helpmodel" class="help-model">
     <div class="help-model-content">
         <span class="help-close">&times;</span>
@@ -94,31 +111,37 @@
                 <p>Name your file (optional) or click "Use Date/Time" to use the current date and time and click
                     "Download CSV" to save your parts list. If left blank the file will be called "parts_list"</p>
             </section>
-        </div>
-    </div>
-</div>
+        </div> <!-- /help-sections -->
+    </div> <!-- /help-model-content -->
+</div> <!-- /helpmodel -->
 
+<!-- Floating help button -->
+<!-- Positioned fixed in bottom right corner to open help modal -->
 <div id="helpButton" class="help-button">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
         <line x1="12" y1="17" x2="12.01" y2="17"></line>
     </svg>
-</div>
+</div> <!-- /helpButton -->
 
+<!-- Footer section -->
+<!-- Contains attribution, licensing information, and Creative Commons icons -->
 <div class="footer">
     <p>
         <a property="dct:title" rel="cc:attributionURL" href="https://github.com/reillymoonen/pcpartpicker-spreadsheet-converter">PCPartPicker List Scraper</a> by
         <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/reillymoonen">Reilly Moonen</a> is licensed under
-        <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block; text-decoration:none;">
             CC BY-SA 4.0
             <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="">
             <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="">
             <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt="">
         </a>
     </p>
-</div>
+</div> <!-- /footer -->
 
+<!-- External JavaScript libraries -->
+<!-- Bootstrap bundle for UI components and functionality -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../static/js/script.js"></script>
 </body>

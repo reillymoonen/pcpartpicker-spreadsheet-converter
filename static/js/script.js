@@ -106,15 +106,20 @@ document.getElementById("scraperForm")
         }
     });
 
-// Date/Time button handler
-document.getElementById("datetimeButton").addEventListener("click", function() {
+// Function to generate current timestamp filename
+function generateTimestampFilename() {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
     const hours = String(now.getHours()).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
-    const timestamp = `pcparts_${year}-${month}-${day}_${hours}:${minutes}`;
+    return `pcparts_${year}-${month}-${day}_${hours}:${minutes}`;
+}
+
+// Date/Time button handler
+document.getElementById("datetimeButton").addEventListener("click", function() {
+    const timestamp = generateTimestampFilename();
     document.getElementById("filename").value = timestamp;
 });
 
@@ -122,8 +127,10 @@ document.getElementById("datetimeButton").addEventListener("click", function() {
 document.getElementById("downloadButton")
     .addEventListener("click", async function() {
         if (!currentData) return;
-        const filename = document.getElementById("filename").value ||
-                        "parts_list";
+
+        // Use current date/time for filename instead of input field
+        const filename = generateTimestampFilename();
+
         try {
             const numberedData = currentData.map((part, index) =>
                 ({ Number: index + 1, ...part }));
