@@ -1,4 +1,11 @@
-/* Gradient Background */
+/* Base body styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+}
+
+/* Gradient background for main body */
 .gradient-background {
     background: linear-gradient(300deg, #dbfffa, #dcfcdc, #d5d1ff);
     background-size: 240% 240%;
@@ -13,339 +20,7 @@
     100% { background-position: 0 50%; }
 }
 
-/* Dark Mode Styles */
-body.dark-mode {
-    background: linear-gradient(300deg, #204a47, #304330, #312e66);
-    background-size: 180% 180%;
-    color: #fff;
-}
-
-.bg-dark {
-    background: #444444 !important;
-}
-
-.dark-mode h1, .dark-mode label {
-    color: #fff;
-}
-
-.link-column {
-    width: 40px;
-    text-align: center;
-}
-
-.link-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    color: #000000;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.2s;
-}
-
-.link-button svg {
-    width: 16px;
-    height: 16px;
-}
-
-/* Dark mode styles */
-.dark-mode .link-button {
-    color: #ffffff;
-}
-
-h5 {
-    font-size: 19px;
-    max-width: 700px;
-    text-align: center;
-    margin: 0 auto; /* Centers the block horizontally */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.dark-mode .container {
-    background: #333;
-    color: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.dark-mode input[type="text"], .dark-mode .form-control {
-    background: #333333 !important;
-    color: #fff !important;
-    border: 1px solid #555 !important;
-}
-
-/* Placeholder text color for dark mode */
-.dark-mode input::placeholder,
-.dark-mode textarea::placeholder,
-.dark-mode .form-control::placeholder {
-    color: #aaa !important;
-    opacity: 1;
-}
-
-/* For older browsers */
-.dark-mode input::-webkit-input-placeholder,
-.dark-mode textarea::-webkit-input-placeholder,
-.dark-mode .form-control::-webkit-input-placeholder {
-    color: #aaa !important;
-}
-
-.dark-mode input::-moz-placeholder,
-.dark-mode textarea::-moz-placeholder,
-.dark-mode .form-control::-moz-placeholder {
-    color: #aaa !important;
-}
-
-.dark-mode input:-ms-input-placeholder,
-.dark-mode textarea:-ms-input-placeholder,
-.dark-mode .form-control:-ms-input-placeholder {
-    color: #aaa !important;
-}
-
-.dark-mode button, .dark-mode .btn-primary {
-    background-color: #3498db;
-    color: white !important;
-    border: 1px solid #555;
-}
-
-.dark-mode button:hover, .dark-mode .btn-primary:hover {
-    background-color: #2980b9 !important;
-}
-
-.dark-mode #downloadButton {
-    background-color: #27ae60 !important;
-    color: white !important;
-}
-
-.dark-mode #downloadButton:hover {
-    background-color: #219a52 !important;
-}
-
-.dark-mode .footer {
-    color: #bbb;
-}
-
-.dark-mode .footer a {
-    color: #35dbf3;
-}
-
-.dark-mode th {
-    background-color: #333 !important;
-    color: #fff !important;
-}
-
-.dark-mode .bg-light {
-    background-color: #444 !important;
-    color: #fff !important;
-}
-
-/* Base styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    margin: 0;
-}
-
-/* Add this to your existing styles.css */
-.help-sections a {
-    color: #2c3e50; /* Same as footer links in light mode */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.help-sections a:hover {
-    color: #3498db; /* Same hover color as footer links */
-    text-decoration: underline;
-}
-
-.dark-mode .help-sections a {
-    color: #35dbf3; /* Same as footer links in dark mode */
-}
-
-.dark-mode .help-sections a:hover {
-    color: #5dade2; /* Same hover color as footer links in dark mode */
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-.table-container {
-    margin-top: 20px;
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    padding: 12px 8px;
-    position: relative;
-}
-
-/* Sort button styles */
-.sort-btn {
-    background: none !important;
-    color: inherit !important; /* Explicitly inherit text color */
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0 0 0 5px !important;
-    vertical-align: middle;
-    transition: transform 0.2s;
-    border: 0 !important;
-}
-
-.sort-btn:hover {
-    transform: scale(1.2);
-    color: inherit !important; /* Force no color change on hover */
-    background: none !important; /* Ensure no background appears */
-}
-
-.sort-btn.active-sort {
-    transform: scale(1.2);
-    color: inherit !important; /* Or use your preferred active color */
-}
-
-/* Dark mode overrides */
-.dark-mode .sort-btn,
-.dark-mode .sort-btn:hover,
-.dark-mode .sort-btn.active-sort {
-    color: inherit !important;
-    background: none !important;
-}
-
-
-/* Number column styling */
-.number-column {
-    width: 60px;
-    text-align: center;
-}
-
-#downloadSection {
-    display: none;
-    margin-top: 20px;
-}
-
-.input-with-button {
-    display: flex;
-    gap: 10px;
-}
-
-.delete-btn {
-    background-color: #ff4d4d !important; /* Red background */
-    color: white !important; /* White text */
-    border: none !important; /* Remove border */
-    width: 24px; /* Adjust size as needed */
-    height: 24px;
-    border-radius: 50%; /* Make it a circle */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px; /* Adjust font size as needed */
-    line-height: 1; /* Ensure the X is centered */
-    padding: 0 !important; /* Remove padding */
-    transition: background-color 0.1s ease-in-out; /* Smooth transition for hover effect */
-}
-
-.delete-btn:hover {
-    background-color: #6e0000 !important; /* Darker red on hover */
-}
-
-.dark-mode .delete-btn {
-    background-color: #ff4d4d !important;
-}
-
-.dark-mode .delete-btn:hover {
-    background-color: #6e0000 !important;
-}
-
-.secondary-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 0 15px;
-    white-space: nowrap;
-}
-
-.secondary-button:hover {
-    background-color: #2980b9;
-}
-
-#downloadButton {
-    background-color: #27ae60;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-}
-
-#downloadButton:hover {
-    background-color: #219a52;
-}
-
-#loading {
-    display: none;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-}
-
-.dark-mode .spinner {
-    border: 4px solid #444;
-    border-top: 4px solid #3498db;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px; /* Adjust the max width as needed */
-}
-
-/* Dark mode toggle */
+/* Dark mode toggle button */
 .dark-mode-toggle {
     position: fixed;
     bottom: 20px;
@@ -390,26 +65,192 @@ td {
     background: linear-gradient(145deg, #d9d9d9, #878787);
 }
 
-.footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.9em;
-    color: #777;
+/* Main container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Main page title */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Subtitle/description */
+h5 {
+    font-size: 19px;
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto; /* Centers the block horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Input with button container */
+.input-with-button {
+    display: flex;
+    gap: 10px;
+}
+
+/* Secondary buttons (Paste, Date/Time) */
+.secondary-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0 15px;
+    white-space: nowrap;
+}
+
+.secondary-button:hover {
+    background-color: #2980b9;
+}
+
+/* Loading section */
+#loading {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Table container */
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+/* Main table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table headers and cells */
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Table headers */
+th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    padding: 12px 8px;
+    position: relative;
+}
+
+/* Table cell content overflow handling */
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust the max width as needed */
+}
+
+/* Sort button styles */
+.sort-btn {
+    background: none !important;
+    color: inherit !important; /* Explicitly inherit text color */
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 0 0 5px !important;
+    vertical-align: middle;
+    transition: transform 0.2s;
+    border: 0 !important;
+}
+
+.sort-btn:hover {
+    transform: scale(1.2);
+    color: inherit !important; /* Force no color change on hover */
+    background: none !important; /* Ensure no background appears */
+}
+
+.sort-btn.active-sort {
+    transform: scale(1.2);
+    color: inherit !important; /* Or use your preferred active color */
+}
+
+/* Number column styling */
+.number-column {
+    width: 60px;
+    text-align: center;
+}
+
+/* Link column styling */
+.link-column {
+    width: 40px;
+    text-align: center;
+}
+
+/* Link button styles */
+.link-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #000000;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.link-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Delete button styles */
+.delete-btn {
+    background-color: #ff4d4d !important;
+    color: white !important;
+    border: none !important;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    line-height: 1;
+    padding: 0 !important;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.delete-btn:hover {
+    background-color: #6e0000 !important; /* Darker red on hover */
 }
 
 /* Total cost row styling */
 .total-row {
     font-weight: bold;
     background-color: #f8f9fa;
-}
-
-.dark-mode .total-row {
-    background-color: #444;
-}
-
-.dark-mode td {
-    border-bottom: 1px solid #555;
 }
 
 /* Row hover effect */
@@ -420,12 +261,6 @@ td {
 #partsTable tbody tr:not(.total-row):hover {
     background-color: #e1e1e1;
     color: #000000;
-}
-
-/* Dark mode hover effect */
-.dark-mode #partsTable tbody tr:not(.total-row):hover {
-    background-color: #424242;
-    color: #ffffff;
 }
 
 /* Drag and Drop Styles */
@@ -439,11 +274,6 @@ td {
     border-top: 2px solid #3498db !important;
 }
 
-.dark-mode .drag-over {
-    background-color: rgba(52, 152, 219, 0.3) !important;
-    border-top: 2px solid #3498db !important;
-}
-
 /* Optional: Add a grab cursor */
 .draggable-row td:first-child {
     cursor: grab;
@@ -453,6 +283,29 @@ td {
     cursor: grabbing;
 }
 
+/* Download section */
+#downloadSection {
+    display: none;
+    margin-top: 20px;
+}
+
+/* Download button */
+#downloadButton {
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#downloadButton:hover {
+    background-color: #219a52;
+}
+
+/* Help modal background */
 .help-model {
     display: none !important; /* Ensure it's always hidden by default */
     position: fixed;
@@ -482,20 +335,15 @@ td {
     pointer-events: auto;
 }
 
-/* Help section image styling */
-.help-sections img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.help-model {
+    overflow: hidden !important;
 }
 
-.dark-mode .help-sections img {
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+.body {
+    overflow: hidden;
 }
 
+/* Help modal content */
 .help-model-content {
     background-color: #fefefe;
     margin: 0; /* Remove margin */
@@ -509,61 +357,7 @@ td {
     position: relative; /* Ensure proper positioning */
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .help-model-content {
-        width: 90%; /* Slightly less width on smaller screens */
-        margin: 0 auto; /* Center the content */
-        max-height: 80vh; /* Slightly more height on mobile */
-    }
-}
-
-.dark-mode .help-model-content {
-    background-color: #333;
-    color: white;
-}
-
-/* Fullscreen image styles */
-.fullscreen-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3000;
-    cursor: zoom-out;
-}
-
-.fullscreen-image img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
-
-.dark-mode .fullscreen-image {
-    background-color: rgba(20, 20, 20, 0);
-    backdrop-filter: blur(5px);
-}
-
-.help-sections img {
-    cursor: zoom-in;
-    transition: transform 0.2s ease;
-}
-
-.help-sections img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.dark-mode .help-sections img:hover {
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-}
-
-/* Replace the existing .help-close styles with these */
+/* Help modal close button */
 .help-close {
     position: absolute;
     top: 15px;
@@ -590,29 +384,12 @@ td {
     background-color: rgba(231, 76, 60, 0.1);
 }
 
-.dark-mode .help-close {
-    color: #bbb;
-}
-
-.dark-mode .help-close:hover {
-    color: #ff6b6b;
-    background-color: rgba(255, 107, 107, 0.1);
-}
-
-/* Add this to ensure the close button stays on top of content */
-.help-model-content {
-    position: relative;
-}
-
+/* Help sections */
 .help-sections section {
     margin-bottom: 20px;
     padding: 10px;
     background-color: #f9f9f9;
     border-radius: 5px;
-}
-
-.dark-mode .help-sections section {
-    background-color: #444;
 }
 
 .help-sections h3 {
@@ -621,21 +398,57 @@ td {
     padding-bottom: 5px;
 }
 
-.dark-mode .help-sections h3 {
-    color: #ecf0f1;
-    border-bottom: 2px solid #5dade2;
-}
-
 .help-sections ul {
     padding-left: 20px;
 }
 
-.help-model {
-    overflow: hidden !important;
+.help-sections a {
+    color: #2c3e50; /* Same as footer links in light mode */
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.body {
-    overflow: hidden;
+.help-sections a:hover {
+    color: #3498db; /* Same hover color as footer links */
+    text-decoration: underline;
+}
+
+/* Help section image styling */
+.help-sections img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+
+.help-sections img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Fullscreen image styles */
+.fullscreen-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    cursor: zoom-out;
+}
+
+.fullscreen-image img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
 }
 
 /* Help Button */
@@ -662,6 +475,205 @@ td {
     background-color: #2980b9;
 }
 
+/* Footer section */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #777;
+    padding: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .help-model-content {
+        width: 90%; /* Slightly less width on smaller screens */
+        margin: 0 auto; /* Center the content */
+        max-height: 80vh; /* Slightly more height on mobile */
+    }
+}
+
+/* Dark Mode Base Styles */
+body.dark-mode {
+    background: linear-gradient(300deg, #204a47, #304330, #312e66);
+    background-size: 180% 180%;
+    color: #fff;
+}
+
+.bg-dark {
+    background: #444444 !important;
+}
+
+.dark-mode h1, .dark-mode label {
+    color: #fff;
+}
+
+/* Dark mode container */
+.dark-mode .container {
+    background: #333;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode form inputs */
+.dark-mode input[type="text"], .dark-mode .form-control {
+    background: #333333 !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
+}
+
+/* Placeholder text color for dark mode */
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder,
+.dark-mode .form-control::placeholder {
+    color: #aaa !important;
+    opacity: 1;
+}
+
+/* For older browsers */
+.dark-mode input::-webkit-input-placeholder,
+.dark-mode textarea::-webkit-input-placeholder,
+.dark-mode .form-control::-webkit-input-placeholder {
+    color: #aaa !important;
+}
+
+.dark-mode input::-moz-placeholder,
+.dark-mode textarea::-moz-placeholder,
+.dark-mode .form-control::-moz-placeholder {
+    color: #aaa !important;
+}
+
+.dark-mode input:-ms-input-placeholder,
+.dark-mode textarea:-ms-input-placeholder,
+.dark-mode .form-control:-ms-input-placeholder {
+    color: #aaa !important;
+}
+
+/* Dark mode buttons */
+.dark-mode button, .dark-mode .btn-primary {
+    background-color: #3498db;
+    color: white !important;
+    border: 1px solid #555;
+}
+
+.dark-mode button:hover, .dark-mode .btn-primary:hover {
+    background-color: #2980b9 !important;
+}
+
+.dark-mode #downloadButton {
+    background-color: #27ae60 !important;
+    color: white !important;
+}
+
+.dark-mode #downloadButton:hover {
+    background-color: #219a52 !important;
+}
+
+/* Dark mode loading spinner */
+.dark-mode .spinner {
+    border: 4px solid #444;
+    border-top: 4px solid #3498db;
+}
+
+/* Dark mode table styles */
+.dark-mode th {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+.dark-mode .bg-light {
+    background-color: #444 !important;
+    color: #fff !important;
+}
+
+.dark-mode td {
+    border-bottom: 1px solid #555;
+}
+
+.dark-mode .total-row {
+    background-color: #444;
+}
+
+/* Dark mode table hover effect */
+.dark-mode #partsTable tbody tr:not(.total-row):hover {
+    background-color: #424242;
+    color: #ffffff;
+}
+
+/* Dark mode sort buttons */
+.dark-mode .sort-btn,
+.dark-mode .sort-btn:hover,
+.dark-mode .sort-btn.active-sort {
+    color: inherit !important;
+    background: none !important;
+}
+
+/* Dark mode link buttons */
+.dark-mode .link-button {
+    color: #ffffff;
+}
+
+/* Dark mode delete buttons */
+.dark-mode .delete-btn {
+    background-color: #ff4d4d !important;
+}
+
+.dark-mode .delete-btn:hover {
+    background-color: #6e0000 !important;
+}
+
+/* Dark mode drag and drop */
+.dark-mode .drag-over {
+    background-color: rgba(52, 152, 219, 0.3) !important;
+    border-top: 2px solid #3498db !important;
+}
+
+/* Dark mode help modal */
+.dark-mode .help-model-content {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode .help-close {
+    color: #bbb;
+}
+
+.dark-mode .help-close:hover {
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+}
+
+.dark-mode .help-sections section {
+    background-color: #444;
+}
+
+.dark-mode .help-sections h3 {
+    color: #ecf0f1;
+    border-bottom: 2px solid #5dade2;
+}
+
+.dark-mode .help-sections a {
+    color: #35dbf3; /* Same as footer links in dark mode */
+}
+
+.dark-mode .help-sections a:hover {
+    color: #5dade2; /* Same hover color as footer links in dark mode */
+}
+
+.dark-mode .help-sections img {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .help-sections img:hover {
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .fullscreen-image {
+    background-color: rgba(20, 20, 20, 0);
+    backdrop-filter: blur(5px);
+}
+
+/* Dark mode help button */
 .dark-mode .help-button {
     background-color: #5dade2;
     color: white;
@@ -669,4 +681,13 @@ td {
 
 .dark-mode .help-button:hover {
     background-color: #3498db;
+}
+
+/* Dark mode footer */
+.dark-mode .footer {
+    color: #bbb;
+}
+
+.dark-mode .footer a {
+    color: #35dbf3;
 }
