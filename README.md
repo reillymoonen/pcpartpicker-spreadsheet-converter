@@ -72,11 +72,11 @@ The files starting with `00` can be run separately from the command line. These 
 
 ### Quick Start with Docker
 
-Pull and run the pre-built image from Docker Hub:
+Pull and run the pre-built image from GitHub Container Registry:
 
 ```bash
-docker pull jeffmichaels/pcpartpicker-spreadsheet-converter
-docker run -p 5000:5000 jeffmichaels/pcpartpicker-spreadsheet-converter
+docker pull ghcr.io/reillymoonen/pcpartpicker-spreadsheet-converter
+docker run -p 5000:5000 ghcr.io/reillymoonen/pcpartpicker-spreadsheet-converter
 ```
 
 Then access the application at `http://localhost:5000`
@@ -110,7 +110,7 @@ Access the application at `http://localhost:5000`
 
 ---
 
-**Docker Hub:** [jeffmichaels/pcpartpicker-spreadsheet-converter](https://hub.docker.com/r/jeffmichaels/pcpartpicker-spreadsheet-converter)
+**GitHub Packages:** [ghcr.io/reillymoonen/pcpartpicker-spreadsheet-converter](https://github.com/reillymoonen/pcpartpicker-spreadsheet-converter/pkgs/container/pcpartpicker-spreadsheet-converter)
 
 **Note:** If cloning and building locally, replace `yourusername` with your actual GitHub username in the clone command above.
 
