@@ -75,8 +75,8 @@ The files starting with `00` can be run separately from the command line. These 
 Pull and run the pre-built image from Docker Hub:
 
 ```bash
-docker pull yourusername/pcpartpicker-spreadsheet-converter
-docker run -p 5000:5000 yourusername/pcpartpicker-spreadsheet-converter
+docker pull jeffmichaels/pcpartpicker-spreadsheet-converter
+docker run -p 5000:5000 jeffmichaels/pcpartpicker-spreadsheet-converter
 ```
 
 Then access the application at `http://localhost:5000`
@@ -110,7 +110,9 @@ Access the application at `http://localhost:5000`
 
 ---
 
-**Note:** Replace `yourusername` with your actual Docker Hub username in the commands above.
+**Docker Hub:** [jeffmichaels/pcpartpicker-spreadsheet-converter](https://hub.docker.com/r/jeffmichaels/pcpartpicker-spreadsheet-converter)
+
+**Note:** If cloning and building locally, replace `yourusername` with your actual GitHub username in the clone command above.
 
 ---
 
