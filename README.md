@@ -68,6 +68,53 @@ The files starting with `00` can be run separately from the command line. These 
 - **tqdm**: A library for displaying progress bars in the terminal, useful for long-running tasks.
 - **colorama**: A library to add color to text printed in the terminal, making logs and outputs more readable.
 
+## Docker
+
+### Quick Start with Docker
+
+Pull and run the pre-built image from GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/reillymoonen/pcpartpicker-spreadsheet-converter
+docker run -p 5000:5000 ghcr.io/reillymoonen/pcpartpicker-spreadsheet-converter
+```
+
+Then access the application at `http://localhost:5000`
+
+### Build Locally with Docker
+
+If you want to build the Docker image yourself:
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/pcpartpicker-spreadsheet-converter.git
+cd pcpartpicker-spreadsheet-converter
+
+# Build the Docker image
+docker build -t pcpartpicker-spreadsheet-converter .
+
+# Run the container
+docker run -p 5000:5000 pcpartpicker-spreadsheet-converter
+```
+
+Access the application at `http://localhost:5000`
+
+### Using Docker Desktop
+
+1. Install Docker Desktop
+2. Build the image: `docker build -t pcpartpicker-spreadsheet-converter .`
+3. Go to Images tab in Docker Desktop
+4. Click the Run button next to your image
+5. Set ports to 5000:5000
+6. Access at `http://localhost:5000`
+
+---
+
+**GitHub Packages:** [ghcr.io/reillymoonen/pcpartpicker-spreadsheet-converter](https://github.com/reillymoonen/pcpartpicker-spreadsheet-converter/pkgs/container/pcpartpicker-spreadsheet-converter)
+
+**Note:** If cloning and building locally, replace `yourusername` with your actual GitHub username in the clone command above.
+
+---
 
 ### Copyright 2026 Reilly Moonen
 Licensed under the Apache License, Version 2.0 (the "License");
