@@ -73,6 +73,7 @@ The files starting with `00` can be run separately from the command line. These 
 ### Quick Start with Docker
 
 Pull and run the pre-built image from Docker Hub:
+
 ```bash
 docker pull yourusername/pcpartpicker-spreadsheet-converter
 docker run -p 5000:5000 yourusername/pcpartpicker-spreadsheet-converter
@@ -83,6 +84,7 @@ Then access the application at `http://localhost:5000`
 ### Build Locally with Docker
 
 If you want to build the Docker image yourself:
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/pcpartpicker-spreadsheet-converter.git
@@ -105,6 +107,10 @@ Access the application at `http://localhost:5000`
 4. Click the Run button next to your image
 5. Set ports to 5000:5000
 6. Access at `http://localhost:5000`
+
+---
+
+**Note:** Replace `yourusername` with your actual Docker Hub username in the commands above.
 
 ---
 
